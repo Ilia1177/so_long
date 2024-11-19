@@ -73,5 +73,5 @@ void	move_up(t_data *game);
 void	move_down(t_data *game);
 void	move_right(t_data *game);
 void	move_left(t_data *game);
-int key_press(int keycode, t_data *data);
-int key_release(int keycode, t_data *data); 
+int		key_press(int keycode, t_data *data);
+int		key_release(int keycode, t_data *data); 

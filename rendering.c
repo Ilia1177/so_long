@@ -1,8 +1,10 @@
 #include "so_long.h"
+
 int	check_pos(t_data *game, int x, int y)
 {
 	x = x / game->map.def;
 	y = y / game->map.def;
+	ft_printf("check\n");
 	if (game->map.soil[y][x] == 1)
 		return (0);
 	else if (game->map.soil[y][x] == 0)
@@ -94,7 +96,6 @@ int	make_map(t_map *map, char *path, int def)
 //			free(mapline);
 //			return (0);
 //		}
-		ft_printf("%s    height = %d\n", mapline, height);
 		height++;
 		free(mapline);
 		mapline = get_next_line(map->fd);
