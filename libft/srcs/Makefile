@@ -6,7 +6,7 @@
 #    By: npolack <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/26 10:27:51 by npolack           #+#    #+#              #
-#    Updated: 2024/10/31 15:28:17 by npolack          ###   ########.fr        #
+#    Updated: 2024/11/19 09:33:50 by npolack          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ SRCS	=	ft_isspace.c	\
 			ft_putchar_fd.c	\
 			ft_putstr_fd.c	\
 			ft_putendl_fd.c	\
-			ft_putnbr_fd.c
+			ft_putnbr_fd.c	\
+			ft_strnlen.c
 
 BONUS_SRCS := $(addsuffix _bonus.c, $(BONUS_SRCS))
 BONUS_SRCS := $(addprefix ft_, $(BONUS_SRCS))
