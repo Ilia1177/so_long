@@ -20,15 +20,28 @@
 //#define	WINDOW_WIDTH 400
 //#define WINDOW_HEIGHT 400
 
+typedef struct	s_item {
+	int		exist;
+	int		x;
+	int		y;
+	int		height;
+	int		width;
+	void	*img;
+}				t_item;
+
 
 typedef struct	s_movable {
+	int		endian;
+	int		bpp;
+	int		l_len;
 	int		pos_y;
 	int		pos_x;
 	int		width;
 	int		height;
+	int		current_frame;
 	void	*img;
 	char	*addr;
-	
+	void	*sprite[4];
 }				t_movable;
 
 typedef struct	s_map{
@@ -43,7 +56,9 @@ typedef struct	s_map{
 
 typedef struct	s_data {
 
+	int		items_nb;
 	int		def;
+	t_item	*item;
 	t_movable	hero;
 	t_movable	*enemy;
 	void	*mlx;
@@ -75,3 +90,5 @@ void	move_right(t_data *game);
 void	move_left(t_data *game);
 int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data); 
+void	animate(t_data *game);
+void	draw_collectable(t_data *game);
