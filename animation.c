@@ -6,10 +6,10 @@ void	animate(t_data *game)
 
 //	mlx_clear_window(game->mlx, game->win);
 
-    mlx_put_image_to_window(game->mlx, game->win, game->hero.sprite[game->hero.current_frame], game->hero.pos_x, game->hero.pos_y);
+    mlx_put_image_to_window(game->mlx, game->win, game->hero.face[game->hero.frame].img, game->hero.pos.x, game->hero.pos.y);
 	counter++;
     if (counter >= 5) { // Assuming ~10ms per loop iteration
         counter = 0;
-        game->hero.current_frame = (game->hero.current_frame + 1) % 4; // Cycle through 0-3
+        game->hero.frame = (game->hero.frame + 1) % 4; // Cycle through 0-3
     }
 }

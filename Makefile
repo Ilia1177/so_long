@@ -1,6 +1,6 @@
 NAME = so_long
 LIBFT = libft/libft.a
-SRCS = so_long.c rendering.c animation.c
+SRCS = so_long.c rendering.c animation.c initialisation.c input.c
 OBJS = $(SRCS:.c=.o)
 CFLAGS = -O0 -g
 all : $(NAME)
@@ -15,11 +15,11 @@ $(LIBFT) :
 	make -C libft
 
 clean	:
-	@make clean -C libft
+	make clean -C libft
 	$(RM) $(OBJS)
 
 fclean	: clean
-	@make fclean -C libft
+	make fclean -C libft
 
 re		: fclean all
 

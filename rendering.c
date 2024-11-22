@@ -1,5 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rendering.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
+/*   Updated: 2024/11/22 18:25:12 by npolack          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
+double	dist(t_point a, t_point b)
+{
+	return sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
+}
+
+void	check_items(t_data *game)
+{
+	int	i;
+
+	i = 0;
+	ft_printf("%d, %d, %d\n", game->hero.pos.x, game->item[0].pos.x, game->map.def);
+	while (i < game->items_nb)
+	{
+		if (dist(game->hero.pos, game->item[i].pos) < game->map.def)
+			game->item[i].exist = 0;
+		i++;
+	}
+}
+ 
 int	check_pos(t_data *game, int x, int y)
 {
 	int i;
@@ -7,9 +38,9 @@ int	check_pos(t_data *game, int x, int y)
 
 	i = x / game->map.def;
 	j = y / game->map.def;
-	if (x >= game->width || y >= game->height)
+	if (x > game->width || y > game->height)
 		return (0);
-	if (x <= 0 || y <= 0)
+	if (x < 0 || y < 0)
 		return (0);
 	if (game->map.soil[j][i] == '1')
 		return (0);
@@ -18,18 +49,24 @@ int	check_pos(t_data *game, int x, int y)
 	return (0);
 }
 
+void	refresh(t_data *game)
+{
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+//	draw_map(game);
+//	draw_collectable(game);
+//	draw_hero(game);
+}
+
 int	render(void *data)
 {
+//  draw_map(data);
+//	draw_hero(data);
+	check_items(data);
 	handle_input(data);
-	draw_map(data);
-	draw_hero(data);
-	draw_collectable(data);
-//	animate(data);
+//	draw_collectable(data);
 	return (0);
 }
-#include <stdlib.h>
-#include <stdio.h>
-
+/*
 unsigned int *copy_xpm_to_buffer(t_data *game, void *xpm_image, char *image_data)
 {
     int x, y; // Iterators for looping through pixels
@@ -52,58 +89,134 @@ unsigned int *copy_xpm_to_buffer(t_data *game, void *xpm_image, char *image_data
         }
     }
     return buffer;
+}*/
+
+void	put_pixel_img(t_data *game, int x, int y, int color)
+{
+	char	*dst;
+	t_img	*img;
+
+	img = &game->img;
+	if (x >= 0 && y >= 0 && x < game->width && y < game->height)
+   	{
+		dst = img->addr + (y * img->line_l + x * (img->bpp / 8));
+		*(unsigned int *) dst = color;
+	}
+}
+
+unsigned int	get_pixel_img(t_img img, int x, int y)
+{
+	return (*(unsigned int *)((img.addr + (y * img.line_l) + (x * img.bpp / 8))));
+}
+
+void	put_img_to_game(t_data *game, t_img src, int x, int y)
+{
+	int i;
+	int j;
+	unsigned int	color;
+
+	i = 0;
+	while(i < src.w)
+   	{
+		j = 0;
+		while (j < src.h)
+	   	{
+			color = get_pixel_img(src, i, j);
+	//		ft_printf("%x\n", color);
+			if (color == 0xFF000000)
+			{	
+				j++;
+				continue ;
+			}
+			put_pixel_img(game, x + i, y + j, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+t_img	new_file_img(char *path, t_data *game)
+{
+	t_img img;
+
+	img.img = mlx_xpm_file_to_image(game->mlx, path, &img.w, &img.h);
+	if (!img.img)
+		write(2, "File could not be read\n", 23);
+	else
+		img.addr = mlx_get_data_addr(img.img, &(img.bpp), &(img.line_l), &(img.endian));
+	return (img);
 }
 
 void	draw_hero(t_data *game)
 {
-	void	*buffer;
-	char	*data;
+	int		x;
+	int		y;
+	int		frame;
+	t_img	img;
+	void	*mlx;
+	void	*win;
+	void	*data;
 
-//	buffer = mlx_new_image(game->mlx, game->hero.width, game->hero.height);
-	data = mlx_get_data_addr(game->hero.img, &game->hero.bpp, &game->hero.l_len, &game->hero.endian);
-	buffer = copy_xpm_to_buffer(game, game->hero.img, data);
-
-//	mlx_put_image_to_window(game->mlx, game->win, buffer, 0, 0);
-mlx_put_image_to_window(game->mlx, game->win, game->hero.sprite[game->hero.current_frame], game->hero.pos_x, game->hero.pos_y);
+	frame = game->hero.frame;
+	x = game->hero.pos.x;
+	y = game->hero.pos.y;
+	img = game->hero.face[frame];
+	win = game->win;
+	mlx = game->mlx;
+	put_img_to_game(game, img, x, y);
+	//mlx_put_image_to_window(mlx, win, img, x, y);
 }
-
 void	draw_collectable(t_data *game)
 {
 	int	i;
+	t_img	img;
+	void	*mlx;
+	void	*win;
+	int		x;
+	int		y;
 
+	win = game->win;
+	mlx = game->mlx;
 	i = -1;
 	while (++i < game->items_nb)
+	{
+		img = game->item[i].img;
+		x = game->item[i].pos.x;
+		y = game->item[i].pos.y;
 		if (game->item[i].exist)
-			mlx_put_image_to_window(game->mlx, game->win, game->item[i].img, game->item[i].x, game->item[i].y);
+			put_img_to_game(game, img, x, y);
+			//mlx_put_image_to_window(mlx, win, img, x, y);
+	}
 }
 
 void	draw_map(t_data *game)
 {
-	int	i;
-	int	x;
-	int	y;
-	char	*mapline;
+	t_point	pos;
+	int		def;
+	t_img	wa;
+	t_img	gr;
+	void	*win;
+	void	*mlx;
 
-	y = 0;
-	game->map.fd = open("map.ber", O_RDONLY);
-		while (y < game->map.height)
+	mlx = game->mlx;
+	win = game->win;
+	wa = game->map.wall;
+	gr = game->map.ground;
+	def = game->map.def;
+	pos.y = -1;
+	while (++pos.y < game->map.height / def)
+	{
+		pos.x = -1;
+		while (++pos.x < game->map.width / def)
 		{
-			x = 0;
-			i = 0;
-			mapline = get_next_line(game->map.fd);
-			while (x < game->map.width)
-			{
-				if (mapline[i] == '1')
-					mlx_put_image_to_window(game->mlx, game->win, game->map.wall_tex, x, y);
-				else
-					mlx_put_image_to_window(game->mlx, game->win, game->map.ground_tex, x, y);
-				i++;
-				x += game->map.def;
-			}
-			free(mapline);
-			y += game->map.def;
+			if (game->map.soil[pos.y][pos.x] == '1')
+				put_img_to_game(game, wa, pos.x * def, pos.y * def);
+			//	mlx_put_image_to_window(mlx, win, wa, pos.x * def, pos.y * def);
+			else
+				put_img_to_game(game, gr, pos.x * def, pos.y * def);
+			//	mlx_put_image_to_window(mlx, win, gr, pos.x * def, pos.y * def);
 		}
-		close(game->map.fd);
+	}
 }
 
 int	make_map(t_map *map, char *path, int def)
@@ -117,7 +230,6 @@ int	make_map(t_map *map, char *path, int def)
 	map->fd = open(path, O_RDONLY);
 	mapline = get_next_line(map->fd);
 	width = ft_strnlen(mapline, '\n');
-	
 	height = 0;
 	while (mapline && ft_strcmp(mapline, ""))
 	{
@@ -155,111 +267,31 @@ int	make_map(t_map *map, char *path, int def)
 
 int	close_window(t_data *data)
 {
-	int	y;
+	int	i;
 
-	y = 0;
-	while (y < data->map.height / data->map.def)
+	i = 0;
+	while (i < data->map.height / data->map.def)
 	{
-		free(data->map.soil[y]);
-		y++;
+		free(data->map.soil[i]);
+		i++;
 	}
 	free(data->map.soil);
-	free(data->hero.sprite[0]);
-	free(data->hero.sprite[1]);
-	free(data->hero.sprite[2]);
-	free(data->hero.sprite[3]);
-	free(data->map.ground_tex);
-	free(data->map.wall_tex);
+	mlx_destroy_image(data->mlx, data->hero.face[0].img);
+	mlx_destroy_image(data->mlx, data->hero.face[1].img);
+	mlx_destroy_image(data->mlx, data->hero.face[2].img);
+	mlx_destroy_image(data->mlx, data->hero.face[3].img);
+	mlx_destroy_image(data->mlx, data->map.ground.img);
+	mlx_destroy_image(data->mlx, data->map.wall.img);
+	i = -1;
+	while (++i < data->items_nb)
+		mlx_destroy_image(data->mlx, data->item[i].img.img);
+	free(data->item);
 	mlx_clear_window(data->mlx, data->win);
 	mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+	free(data->mlx);
 	exit(0);
 	return (0);
 }
 
-/*int	handle_no_event(void *data)
-{
-    return (0);
-}*/
 
-int handle_input(t_data *game)
-{
-    if (game->key_states[XK_Escape])
-        close_window(game);
-	if (game->key_states[KEY_W])
-		move_up(game);
-	if (game->key_states[KEY_A])
-		move_left(game);
-	if (game->key_states[KEY_S])
-		move_down(game);
-	if (game->key_states[KEY_D])
-		move_right(game);
-    return (0);
-}
-
-int key_press(int keycode, t_data *data)
-{
-    if (keycode >= 0 && keycode < 99999)
-        data->key_states[keycode] = 1; // Mark key as pressed
-    return (0);
-}
-
-int key_release(int keycode, t_data *data)
-{
-    if (keycode >= 0 && keycode < 99999)
-        data->key_states[keycode] = 0; // Mark key as released
-    return (0);
-}
-
-void	move_object(t_data *game)
-{
-	if (game->hero.pos_y < game->height - game->hero.height)
-		game->hero.pos_y++;
-}
-
-void	move_down(t_data *game)
-{
-	int x;
-	int	y;
-
-    game->hero.current_frame = (game->hero.current_frame + 1) % 4; // Cycle through 0-3
-	x = game->hero.pos_x;
-	y = game->hero.pos_y + 1 + game->hero.height;
-	if (check_pos(game, x, y))
-		game->hero.pos_y++;
-}
-
-void	move_up(t_data *game)
-{
-	int x;
-	int	y;
-
-    game->hero.current_frame = (game->hero.current_frame + 1) % 4; // Cycle through 0-3
-	x = game->hero.pos_x;
-	y = game->hero.pos_y - 1;
-	if (check_pos(game, x, y))
-		game->hero.pos_y--;
-}
-
-void	move_right(t_data *game)
-{
-	int	x;
-	int	y;
-
-    game->hero.current_frame = (game->hero.current_frame + 1) % 4; // Cycle through 0-3
-	x = game->hero.pos_x + game->hero.width + 1;
-	y = game->hero.pos_y;
-	if (check_pos(game, x, y))
-		game->hero.pos_x++;
-}
-
-void	move_left(t_data *game)
-{
-	int	x;
-	int	y;
-
-    game->hero.current_frame = (game->hero.current_frame + 1) % 4; // Cycle through 0-3
-	x = game->hero.pos_x - 1;
-	y = game->hero.pos_y;
-	if (check_pos(game, x, y))
-		game->hero.pos_x--;
-}
