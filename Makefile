@@ -1,6 +1,6 @@
 NAME = so_long
 LIBFT = libft/libft.a
-SRCS = so_long.c rendering.c animation.c initialisation.c input.c
+SRCS = so_long.c rendering.c initialisation.c input.c image_utils.c map.c
 OBJS = $(SRCS:.c=.o)
 CFLAGS = -O0 -g
 all : $(NAME)

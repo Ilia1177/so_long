@@ -12,16 +12,16 @@
 
 #include "so_long.h"
 
-int	free_items(t_data *game, int i)
+
+
+int	free_all(char **object, int i)
 {
-	while (i >= 0)
-	{
-		free(game->item[i].img);
-		i--;
-	}
-	free(game->item);
+	while (--i >= 0)
+		free(object[i]);
+	free(object);
 	return (0);
 }
+
 int	count_collectable(t_data *game)
 {
 	int	j;
@@ -29,10 +29,10 @@ int	count_collectable(t_data *game)
 
 	game->items_nb = 0;
 	j = -1;
-	while (++j < game->height / game->map.def)
+	while (++j < game->map.h)
 	{
 		i = -1;
-		while (++i < game->width / game->map.def)
+		while (++i < game->map.w)
 			if (game->map.soil[j][i] == 'C')
 				game->items_nb++;
 	}
@@ -41,9 +41,7 @@ int	count_collectable(t_data *game)
 
 int	init_collectable(t_data *game)
 {
-	int	i;
-	int	j;
-	int	k;
+	int	i, j, k;
 
 	if (count_collectable(game))
 	{
@@ -52,19 +50,17 @@ int	init_collectable(t_data *game)
 			return (0);
 		k = 0;
 		j = -1;
-		while (++j < game->height / game->map.def)
+		while (++j < game->map.h)
 		{
 			i = -1;
-			while (++i < game->width / game->map.def)
+			while (++i < game->map.w)
 			{
 				if (game->map.soil[j][i] == 'C')
 				{
 					game->item[k].exist = 1;
 					game->item[k].width = 50;
 					game->item[k].height = 50;
-					game->item[k].img = mlx_xpm_file_to_image(game->mlx, "./image/item.xpm", &game->item[k].width, &game->item[k].height);
-					if (!game->item[k].img)
-						return (free_items(game, k));
+					game->item[k].img = new_file_img("./image/item.xpm", game);
 					game->item[k].pos.x = i * game->map.def;
 					game->item[k].pos.y = j * game->map.def;
 					k++;
@@ -74,50 +70,56 @@ int	init_collectable(t_data *game)
 	}
 	return (1);
 }
-
-int	init_map(t_data *game)
+/*int	init_mob(t_data *game)
 {
-	game->map.ground.img = mlx_xpm_file_to_image(game->mlx, "./image/ground.xpm", &game->map.def, &game->map.def);
-	if (!game->map.ground.img)
-		return (0);
-	game->map.wall.img = mlx_xpm_file_to_image(game->mlx, "./image/wall.xpm", &game->map.def, &game->map.def);
-	if (!game->map.wall.img)
+	int, i, j;
+
+
+}*/
+int	init_exit(t_data *game)
+{
+	int	i, j;
+
+	j = -1;
+	while (++j < game->map.h)
+	{
+		i = -1;
+		while (++i < game->map.w)
+		{
+			if (game->map.soil[j][i] == 'E')
+			{
+				game->exit.pos.x = i * game->map.def;
+				game->exit.pos.y = j * game->map.def;
+				break ;
+			}
+		}
+	}
+	game->exit.img = new_file_img("./image/exit.xpm", game);
+	if (!game->exit.img.img)
 		return (0);
 	return (1);
 }
 
-t_img	new_img(int w, int h, t_data *game)
-{
-	t_img	img;
-
-	img.img = mlx_new_image(game->mlx, w, h);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_l, &img.endian);
-	img.w = w;
-	img.h = h;
-	return (img);
-}
 
 int	init_hero(t_data *game)
 {
-	int	i;
-	int	j;
-	t_img tmp;
+	int		i, j;
 
 	game->hero.face[0] = new_file_img("./image/sprite1.xpm", game);
 	game->hero.face[1] = new_file_img("./image/sprite2.xpm", game);
 	game->hero.face[2] = new_file_img("./image/sprite3.xpm", game);
 	game->hero.face[3] = new_file_img("./image/sprite4.xpm", game);
-
-	if (!game->hero.face[0].img || !game->hero.face[1].img || !game->hero.face[2].img || !game->hero.face[3].img)
+	if (!game->hero.face[0].img || !game->hero.face[1].img
+		   	|| !game->hero.face[2].img || !game->hero.face[3].img)
 		return (0);
 	game->hero.frame = 0;
 	game->hero.width = 40;
 	game->hero.height = 40;
-	j = 0;
-	while (j < game->height / game->map.def)
+	j = -1;
+	while (++j < game->map.h)
 	{
-		i = 0;
-		while (i < game->width / game->map.def)
+		i = -1;
+		while (++i < game->map.w)
 		{
 			if (game->map.soil[j][i] == 'P')
 			{
@@ -125,34 +127,51 @@ int	init_hero(t_data *game)
 				game->hero.pos.y = j * game->map.def;
 				break ;
 			}
-			i++;
 		}
-		j++;
 	}
 	return (1);
 }
 
-int	game_init(t_data *game)
-{	
-	int i;
-	int j;
+int load_map_image(t_data *game)
+{
+	game->map.ground = new_file_img("./image/ground.xpm", game);
+	if (!game->map.ground.img)
+		return (0);
+	game->map.wall = new_file_img("./image/wall.xpm", game);
+	if (!game->map.wall.img)
+		return (0);
+	return (1);
+}
 
-	game->height = game->map.height;
-	game->width = game->map.width;
+int	game_init(t_data *game, char *path, int def)
+{	
+	int		i, j;
+	void	*mlx;
+	void	*win;
+
+	if (!init_map(game, path, def))
+		return (0);
+	game->height = game->map.h * game->map.def;
+	game->width = game->map.w * game->map.def;
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, game->width, game->height, "HAZARDOU$ GAME");
-	game->img = new_img(game->width, game->height, game);
+	game->win = mlx_new_window(game->mlx, game->width, game->height, "HZD$");
+	if (!game->win)
+		return (0);
 	if (!game->mlx || !game->win)
 		return (0);
-	if (!init_map(game))
-		return (0);
-	if(!init_hero(game))
+	game->img = new_img(game->width, game->height, game);
+	if (!init_hero(game))
 		return (0);
 	if (!init_collectable(game))
+		return (0);
+	if (!init_exit(game))
+		return (0);
+	if (!check_map(game))
+		return (0);
+	if (!load_map_image(game))
 		return (0);
 	i = -1;
     while (++i < 99999)
 		game->key_states[i] = 0;
-	refresh(game);
 	return (1);
 }

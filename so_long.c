@@ -12,23 +12,25 @@
 
 #include "so_long.h"
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_data	game;
 	
-	if (!make_map(&game.map, "map.ber", 50))
+	if (ac != 2)
 		return (0);
-	game_init(&game);
-
-
-	draw_map(&game);
-	refresh(&game);	
-// register event
-	//mlx_loop_hook(game.mlx, &render, &game);
+	if(!game_init(&game, av[1], 50))
+	{
+		perror("init ");
+		return (0);
+	}
+//	if (!check_map(&game))
+//	{
+//		ft_printf("Map is not valid !\n");
+//		return (0);
+//	}
+	mlx_loop_hook(game.mlx, &render, &game);
     mlx_hook(game.win, 2, 1L << 0, key_press, &game);    // Key press event
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);	 // Key release event
-
-//	loop execute
 	mlx_loop(game.mlx);
 	mlx_destroy_display(game.mlx);
     free(game.mlx);
