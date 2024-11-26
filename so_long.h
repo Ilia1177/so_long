@@ -116,3 +116,5 @@ int				flood_map(t_data *game, int i, int j);
 int				check_map(t_data *game);
 int				free_all(char **object, int i);
 int				make_soil(t_map *map, char *path);
+int				load_images(t_data *game);
+t_point			make_point(int x, int y);

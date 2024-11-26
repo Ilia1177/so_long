@@ -40,7 +40,7 @@ int	init_flooded_map(t_data *game)
 		game->flooded_map.soil[j] = malloc(sizeof (char) * w);
 		i = -1;
 		while (++i < w)
-			game->flooded_map.soil[j][i] = '-';
+			game->flooded_map.soil[j][i] = '0';
 	}
 	return (1);
 }
@@ -48,6 +48,7 @@ int	init_flooded_map(t_data *game)
 int	map_cmp(t_data *game)
 {
 	int	i, j;
+	char	c;
 
 	j = -1;
 	while (++j < game->map.h)
@@ -55,14 +56,17 @@ int	map_cmp(t_data *game)
 		i = -1;
 		while (++i < game->map.w)
 		{
-			if (game->map.soil[j][i] == 'E')
+			c = game->map.soil[j][i];
+			if (c != 'E' && c != 'P' && c != '1' && c != '0' && c != 'C')
+				return (0);
+			if (c == 'E')
 				if (game->flooded_map.soil[j][i] != 'V')
 					return (0);
-			if (game->map.soil[j][i] == 'C')
+			if (c == 'C')
 				if (game->flooded_map.soil[j][i] != 'V')
 					return (0);
 			if (j == 0 || j == game->map.h - 1 || i == 0 || i == game->map.w - 1)
-				if (game->map.soil[j][i] != '1')
+				if (c != '1')
 					return (0);
 		}
 	}
@@ -108,15 +112,11 @@ int	check_map(t_data *game)
 		return (0);
 	flood_map(game, x, y);
 	if (!map_cmp(game) || game->map.h < 3 || game->map.w < 3)
-	{
-		ft_printf("Map is invalid!\n");
 		return (0);
-	}
+	if (game->map.h > 15 || game->map.w > 15)
+		return (0);
 	if (!check_exit_and_collectible(game))
-	{
-		ft_printf("Map is invalid!\n");
 		return (0);
-	}
 	return (1);
 }
 
@@ -152,6 +152,8 @@ int	measure_map(t_map *map, char *path)
 	char	*mapline;
 
 	map->fd = open(path, O_RDONLY);
+	if (map->fd < 0)
+		return (0);
 	mapline = get_next_line(map->fd);
 	width = ft_strnlen(mapline, '\n');
 	height = 0;
@@ -171,6 +173,16 @@ int	measure_map(t_map *map, char *path)
 	map->h = height;
 	map->w = width;
 	return (1);
+}
+
+t_point	make_point(int x, int y)
+{
+	t_point	point;
+
+	point.x = x;
+	point.y = y;
+
+	return (point);
 }
 
 int	make_soil(t_map *map, char *path)
