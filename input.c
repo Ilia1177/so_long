@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/27 11:45:14 by npolack          ###   ########.fr       */
+/*   Updated: 2024/11/27 19:00:13 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	move_down(t_data *game)
 		return ;
 	else
 		game->hero.pos.y += 1;
+	usleep(860);
 	//refresh(game);
 }
 
@@ -75,6 +76,7 @@ void	move_up(t_data *game)
 		return ;
 	else
 		game->hero.pos.y -= 1;
+	usleep(860);
 	//refresh(game);
 }
 
@@ -93,7 +95,7 @@ void	move_right(t_data *game)
 		return ;
 	else
 		game->hero.pos.x += 1;
-	//refresh(game);
+	usleep(860);
 }
 
 void	move_left(t_data *game)
@@ -111,5 +113,6 @@ void	move_left(t_data *game)
 		return ;
 	else
 		game->hero.pos.x -= 1;
+	usleep(860);
 	//refresh(game);
 }

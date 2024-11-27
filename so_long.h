@@ -43,6 +43,8 @@ typedef struct	s_item {
 }				t_item;
 
 typedef struct	s_movable {
+	t_point				acc;
+	t_point				vel;
 	t_point				pos;
 	int					width;
 	int					height;

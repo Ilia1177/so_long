@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/27 12:52:16 by npolack          ###   ########.fr       */
+/*   Updated: 2024/11/27 18:01:51 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ int	init_mob(t_data *game)
 		while (++j < game->map.w)
 		{
 			random = ft_random(0, 100);
-			if (game->map.soil[j][i] == '0' && random < 20)
+			if (game->map.soil[j][i] == '0' && random < 10)
 			{
 				new = make_mob(make_point(i * game->map.def, j * game->map.def));
+				new->vel = make_point(1, 1);
+				new->height= 35;
+				new->width = 35;
 				new->face[0] = new_file_img("image/face.xpm", game);
 				if (!new->face[0].img)
 					return (0);
@@ -66,6 +69,7 @@ t_movable	*make_mob(t_point pos)
 	return (mob);
 }
 
+
 void	draw_mob(t_data *game)
 {
 	t_movable	*move;
@@ -102,15 +106,42 @@ t_point	wander(t_point current_pos, int max_dist)
     return new_pos;
 }
 
+t_point	add_point(t_point a, t_point b)
+{
+	t_point res;
+
+	res.x = a.x + b.x;
+	res.y = a.y + b.y;
+	return (res);
+}
+
+t_point	multiply_point(t_point a, int x)
+{
+	t_point	res;
+
+	res.x = a.x * -1;
+	res.y = a.y * -1;
+	return (res);
+}
+
 void	move_mob(t_data *game)
 {
 	t_movable	*mob;
+	t_point		new_pos;
 
 	mob = game->mob;
-
 	while (mob)
 	{
-		mob->pos = wander(mob->pos, 5);
+		//mob->pos = wander(mob->pos, 5);
+		new_pos = add_point(mob->pos, mob->vel);
+		//check X
+		if(!check_pos(game, new_pos.x, mob->pos.y) || !check_pos(game, new_pos.x + 35, mob->pos.y))
+			mob->vel.x *= -1;
+		if(!check_pos(game, mob->pos.x, new_pos.y) || !check_pos(game, mob->pos.x, new_pos.y + 35))
+			mob->vel.y *= -1;
+		if (check_pos (game, new_pos.x, new_pos.y) && check_pos (game, new_pos.x + 35, new_pos.y)
+			   	&& check_pos (game, new_pos.x, new_pos.y + 35) && check_pos (game, new_pos.x + 35, new_pos.y + 35))
+			mob->pos = new_pos;
 		mob = mob->next;
 	}
 }
@@ -120,6 +151,7 @@ int	ft_random(int min, int max)
 	int				fd;
 	int				i;
 	int				n;
+	int				range;
 	unsigned int	random_value;
 
 	fd = open("/dev/random", O_RDONLY);
@@ -127,7 +159,7 @@ int	ft_random(int min, int max)
 		return (0);
 	n = read(fd, &random_value, sizeof(random_value));
 
-    int range = max - min + 1;
+    range = max - min + 1;
     return (random_value % range) + min;
 }
 
