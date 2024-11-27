@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/22 18:25:12 by npolack          ###   ########.fr       */
+/*   Updated: 2024/11/27 12:40:36 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	render(void *data)
 	draw_collectable(data);
 	draw_exit(data);
 	draw_hero(data);
+	move_mob(data);
+	draw_mob(data);
 	refresh(data);
 	return (0);
 }

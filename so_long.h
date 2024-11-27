@@ -5,6 +5,7 @@
 #include "libft/srcs/include/libft.h"
 #include <fcntl.h>
 #include <stdio.h>
+#include <time.h>
 
 #define KEY_W			119
 #define KEY_A			97
@@ -34,20 +35,20 @@ typedef struct	s_point {
 }				t_point;
 
 typedef struct	s_item {
-	int		exist;
-	t_point	pos;
-	int		height;
-	int		width;
-	t_img	img;
+	int			exist;
+	t_point		pos;
+	int			height;
+	int			width;
+	t_img		img;
 }				t_item;
 
 typedef struct	s_movable {
-	int		endian;
-	t_point	pos;
-	int		width;
-	int		height;
-	int		frame;
-	t_img	face[4];
+	t_point				pos;
+	int					width;
+	int					height;
+	int					frame;
+	t_img				face[4];
+	struct s_movable	*next;
 }				t_movable;
 
 typedef struct	s_map{
@@ -65,7 +66,7 @@ typedef struct	s_data {
 	t_item		exit;
 	t_item		*item;
 	t_movable	hero;
-	t_movable	*enemy;
+	t_movable	*mob;
 	void		*mlx;
 	void		*win;
 	t_map		map;
@@ -118,3 +119,10 @@ int				free_all(char **object, int i);
 int				make_soil(t_map *map, char *path);
 int				load_images(t_data *game);
 t_point			make_point(int x, int y);
+
+void			draw_mob(t_data *game);
+int				init_mob(t_data *game);
+t_movable		*make_mob(t_point pos);
+int				ft_random(int min, int max);
+void			ft_mobadd_back(t_movable **lst, t_movable *new);
+void	move_mob(t_data *game);

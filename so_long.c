@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:52 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/22 18:29:43 by npolack          ###   ########.fr       */
+/*   Updated: 2024/11/27 12:15:57 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 int	main(int ac, char **av)
 {
 	t_data	game;
-	
+	t_movable *mob;
+
 	if (ac != 2)
 		return (0);
 	if(!game_init(&game, av[1], 50))
 	{
 		perror("init ");
 		return (0);
-	}
+	}	
 //	if (!check_map(&game))
 //	{
 //		ft_printf("Map is not valid !\n");

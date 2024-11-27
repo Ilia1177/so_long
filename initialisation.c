@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/22 17:29:45 by npolack          ###   ########.fr       */
+/*   Updated: 2024/11/27 12:26:55 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ int	init_collectable(t_data *game)
 					game->item[k].exist = 1;
 					game->item[k].width = 50;
 					game->item[k].height = 50;
-					game->item[k].pos.x = i * game->map.def;
-					game->item[k].pos.y = j * game->map.def;
+					game->item[k].pos = make_point(i * game->map.def, j * game->map.def);
+				//	game->item[k].pos.x = i * game->map.def;
+				//	game->item[k].pos.y = j * game->map.def;
 					k++;
 				}
 			}
@@ -174,6 +175,8 @@ int	game_init(t_data *game, char *path, int def)
 		ft_printf("Map is invalid !\n");
 		return (0);
 	}
+	if (!init_mob(game))
+		return (0);
 	if (!load_images(game))
 		return (0);
 	i = -1;
