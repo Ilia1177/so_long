@@ -59,6 +59,7 @@ int	render(void *data)
 {
 	handle_input(data);
 	check_items(data);
+	check_mob(data);
 	draw_map(data);
 	draw_collectable(data);
 	draw_exit(data);
@@ -143,6 +144,7 @@ void	draw_map(t_data *game)
 	}
 }
 
+
 int	close_window(t_data *data)
 {
 	int	i;
@@ -153,6 +155,7 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->map.ground.img);
 	mlx_destroy_image(data->mlx, data->map.wall.img);
 	mlx_destroy_image(data->mlx, data->exit.img.img);
+	free_mob(data, &data->mob);
 /*	i = -1;
 	while (++i < data->map.h)
 	{

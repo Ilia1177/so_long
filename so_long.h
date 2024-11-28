@@ -128,3 +128,6 @@ t_movable		*make_mob(t_point pos);
 int				ft_random(int min, int max);
 void			ft_mobadd_back(t_movable **lst, t_movable *new);
 void	move_mob(t_data *game);
+double	dist(t_point a, t_point b);
+int check_mob(t_data *game);
+int free_mob(t_data *game,t_movable **mob);

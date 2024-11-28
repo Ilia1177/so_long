@@ -48,7 +48,6 @@ void	move_down(t_data *game)
 	int	y;
 
     game->hero.frame = (game->hero.frame + 1) % 4;
-//	refresh(game);
 	x = game->hero.pos.x;
 	y = game->hero.pos.y + game->hero.height + 1; 
 	if (!check_pos(game, x, y))
@@ -57,8 +56,6 @@ void	move_down(t_data *game)
 		return ;
 	else
 		game->hero.pos.y += 1;
-	usleep(860);
-	//refresh(game);
 }
 
 void	move_up(t_data *game)
@@ -67,7 +64,6 @@ void	move_up(t_data *game)
 	int	y;
 
     game->hero.frame = (game->hero.frame + 1) % 4;
-	//refresh(game);
 	x = game->hero.pos.x;
 	y = game->hero.pos.y - 1;
 	if (!check_pos(game, x, y))
@@ -76,8 +72,6 @@ void	move_up(t_data *game)
 		return ;
 	else
 		game->hero.pos.y -= 1;
-	usleep(860);
-	//refresh(game);
 }
 
 void	move_right(t_data *game)
@@ -86,7 +80,6 @@ void	move_right(t_data *game)
 	int	y;
 
     game->hero.frame = (game->hero.frame + 1) % 4;
-	//refresh(game);
 	x = game->hero.pos.x + game->hero.width + 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))
@@ -95,7 +88,6 @@ void	move_right(t_data *game)
 		return ;
 	else
 		game->hero.pos.x += 1;
-	usleep(860);
 }
 
 void	move_left(t_data *game)
@@ -104,7 +96,6 @@ void	move_left(t_data *game)
 	int	y;
 
     game->hero.frame = (game->hero.frame + 1) % 4;
-	//refresh(game);
 	x = game->hero.pos.x - 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))
@@ -113,6 +104,4 @@ void	move_left(t_data *game)
 		return ;
 	else
 		game->hero.pos.x -= 1;
-	usleep(860);
-	//refresh(game);
 }

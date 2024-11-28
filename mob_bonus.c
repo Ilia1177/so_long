@@ -11,6 +11,33 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
+int free_mob(t_data *game, t_movable **mob)
+{
+	t_movable	*tmp;
+
+	while (*mob)
+	{
+		tmp = (*mob)->next;
+		mlx_destroy_image(game->mlx, (*mob)->face[0].img);
+		free(*mob);
+		*mob = tmp;
+	}
+	*mob = NULL;
+}
+
+int check_mob(t_data *game)
+{
+	t_movable *mob;
+
+	mob = game->mob;
+	while (mob)
+	{
+		if (dist(mob->pos, game->hero.pos) < 50)
+			close_window(game);
+		mob = mob->next;
+	}
+	return (1);
+}
 
 int	init_mob(t_data *game)
 {
@@ -27,10 +54,10 @@ int	init_mob(t_data *game)
 			if (game->map.soil[j][i] == '0' && random < 10)
 			{
 				new = make_mob(make_point(i * game->map.def, j * game->map.def));
-				new->vel = make_point(1, 1);
+				new->vel = make_point(0, 1);
 				new->height= 35;
 				new->width = 35;
-				new->face[0] = new_file_img("image/face.xpm", game);
+				new->face[0] = new_file_img("image/mob.xpm", game);
 				if (!new->face[0].img)
 					return (0);
 				ft_mobadd_back(&game->mob, new);
@@ -135,13 +162,21 @@ void	move_mob(t_data *game)
 		//mob->pos = wander(mob->pos, 5);
 		new_pos = add_point(mob->pos, mob->vel);
 		//check X
-		if(!check_pos(game, new_pos.x, mob->pos.y) || !check_pos(game, new_pos.x + 35, mob->pos.y))
+		if (!check_pos(game, new_pos.x, mob->pos.y) || !check_pos(game, new_pos.x + 35, mob->pos.y))
 			mob->vel.x *= -1;
-		if(!check_pos(game, mob->pos.x, new_pos.y) || !check_pos(game, mob->pos.x, new_pos.y + 35))
+		if (!check_pos(game, mob->pos.x, new_pos.y) || !check_pos(game, mob->pos.x, new_pos.y + 35))
 			mob->vel.y *= -1;
-		if (check_pos (game, new_pos.x, new_pos.y) && check_pos (game, new_pos.x + 35, new_pos.y)
+		if (check_pos (game, new_pos.x, new_pos.y) && check_pos (game, new_pos.x + 36, new_pos.y)
 			   	&& check_pos (game, new_pos.x, new_pos.y + 35) && check_pos (game, new_pos.x + 35, new_pos.y + 35))
 			mob->pos = new_pos;
+	//	else
+	//	{
+	//		if (!check_pos(game, new_pos.x, mob->pos.y) || !check_pos(game, new_pos.x + 35, mob->pos.y))
+	//			mob->vel.x *= -1;
+	//		if (!check_pos(game, mob->pos.x, new_pos.y) || !check_pos(game, mob->pos.x, new_pos.y + 35))
+	//			mob->vel.y *= -1;
+	//	}
+
 		mob = mob->next;
 	}
 }
