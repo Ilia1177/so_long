@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:52 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/27 12:15:57 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/02 14:33:27 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int ac, char **av)
 	t_data	game;
 	t_movable *mob;
 
+	mob = 0;
 	if (ac != 2)
 		return (0);
 	if(!game_init(&game, av[1], 50))

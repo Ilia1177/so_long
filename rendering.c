@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/27 12:40:36 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/02 16:00:09 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	render(void *data)
 {
 	handle_input(data);
 	check_items(data);
-	check_mob(data);
+	//check_mob(data);
 	draw_map(data);
 	draw_collectable(data);
 	draw_exit(data);
@@ -137,8 +137,10 @@ void	draw_map(t_data *game)
 		while (++i < game->map.w)
 		{
 			if (game->map.soil[j][i] == '1')
+			//	mlx_put_image_to_window (mlx, win, wa.img, i * def, j * def);
 				put_img_to_game(game, wa, i * def, j * def);
 			else
+	//			mlx_put_image_to_window (mlx, win, wa.img, i * def, j * def);
 				put_img_to_game(game, gr, i * def, j * def);
 		}
 	}
@@ -156,15 +158,7 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->map.wall.img);
 	mlx_destroy_image(data->mlx, data->exit.img.img);
 	free_mob(data, &data->mob);
-/*	i = -1;
-	while (++i < data->map.h)
-	{
-		free(data->map.soil[i]);
-		free(data->flooded_map.soil[i]);
-	}
-	free(data->flooded_map.soil);
-	free(data->map.soil);
-*/	free_all(data->flooded_map.soil, data->map.h);
+	free_all(data->flooded_map.soil, data->map.h);
 	free_all(data->map.soil, data->map.h);
 	i = -1;
 	while (++i < data->items_nb)

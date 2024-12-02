@@ -1,7 +1,7 @@
 #include <mlx.h>
 #include <X11/keysym.h>
 #include <X11/X.h>
-#include <math.h>
+#include <math.h> // check if allow
 #include "libft/srcs/include/libft.h"
 #include <fcntl.h>
 #include <stdio.h>

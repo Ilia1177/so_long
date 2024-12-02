@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/11/27 18:01:51 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/02 16:16:23 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int free_mob(t_data *game, t_movable **mob)
 		*mob = tmp;
 	}
 	*mob = NULL;
+	return (0);
 }
 
 int check_mob(t_data *game)
@@ -54,7 +55,7 @@ int	init_mob(t_data *game)
 			if (game->map.soil[j][i] == '0' && random < 10)
 			{
 				new = make_mob(make_point(i * game->map.def, j * game->map.def));
-				new->vel = make_point(0, 1);
+				new->vel = make_point(1, 1);
 				new->height= 35;
 				new->width = 35;
 				new->face[0] = new_file_img("image/mob.xpm", game);
@@ -110,29 +111,6 @@ void	draw_mob(t_data *game)
 	}
 }
 
-t_point	wander(t_point current_pos, int max_dist)
-{
-	// Seed random number generator
-    static int seeded = 0;
-    t_point new_pos;
-
-    if (!seeded) {
-        srand(time(NULL));
-        seeded = 1;
-    }
-
-    // Generate random angle in radians
-    int angle = (int)(rand() % 360) * (3.14159f / 180.0f);
-
-    // Generate random step size (up to max_distance)
-    int distance = (int)rand() / RAND_MAX * max_dist;
-
-    // Calculate new position
-    new_pos.x = current_pos.x + distance * cos(angle);
-    new_pos.y = current_pos.y + distance * sin(angle);
-    return new_pos;
-}
-
 t_point	add_point(t_point a, t_point b)
 {
 	t_point res;
@@ -142,41 +120,59 @@ t_point	add_point(t_point a, t_point b)
 	return (res);
 }
 
+int	valid_objectpos(t_data *game, t_movable *obj, t_point pos)
+{
+	int i1;
+	int	j1;
+	int i2;
+	int j2;
+	char **map;
+
+	map = game->map.soil;
+	i1 = pos.x / game->map.def;
+	j1 = pos.y / game->map.def;
+	i2 = (pos.x + obj->width) / game->map.def;
+	j2 = (pos.y + obj->height) / game->map.def;
+	if (pos.x >= game->width || pos.y >= game->height)
+		return (0);
+	if (pos.x < 0 || pos.y < 0)
+		return (0);
+	if (map[j1][i1] == '1' || map[j1][i2] == '1' 
+		|| map[j2][i1] == '1' || map[j2][i2] == '1')
+		return (0);
+	else if (map[j1][i1] && map[j1][i2] && map[j2][i1] && map[j2][i2])
+		return (1);
+	return (0);
+}
+
 t_point	multiply_point(t_point a, int x)
 {
 	t_point	res;
 
-	res.x = a.x * -1;
-	res.y = a.y * -1;
+	res.x = a.x * x;
+	res.y = a.y * x;
 	return (res);
 }
 
 void	move_mob(t_data *game)
 {
 	t_movable	*mob;
-	t_point		new_pos;
+	t_point		new_pos_x;
+	t_point		new_pos_y;
 
 	mob = game->mob;
 	while (mob)
 	{
-		//mob->pos = wander(mob->pos, 5);
-		new_pos = add_point(mob->pos, mob->vel);
-		//check X
-		if (!check_pos(game, new_pos.x, mob->pos.y) || !check_pos(game, new_pos.x + 35, mob->pos.y))
+		new_pos_x = add_point(mob->pos, make_point(mob->vel.x, 0));
+		new_pos_y = add_point(mob->pos, make_point(0, mob->vel.y));
+		if (valid_objectpos(game, mob, new_pos_x))
+			mob->pos.x = new_pos_x.x;
+		else
 			mob->vel.x *= -1;
-		if (!check_pos(game, mob->pos.x, new_pos.y) || !check_pos(game, mob->pos.x, new_pos.y + 35))
+		if (valid_objectpos(game, mob, new_pos_y))
+			mob->pos.y = new_pos_y.y;
+		else 
 			mob->vel.y *= -1;
-		if (check_pos (game, new_pos.x, new_pos.y) && check_pos (game, new_pos.x + 36, new_pos.y)
-			   	&& check_pos (game, new_pos.x, new_pos.y + 35) && check_pos (game, new_pos.x + 35, new_pos.y + 35))
-			mob->pos = new_pos;
-	//	else
-	//	{
-	//		if (!check_pos(game, new_pos.x, mob->pos.y) || !check_pos(game, new_pos.x + 35, mob->pos.y))
-	//			mob->vel.x *= -1;
-	//		if (!check_pos(game, mob->pos.x, new_pos.y) || !check_pos(game, mob->pos.x, new_pos.y + 35))
-	//			mob->vel.y *= -1;
-	//	}
-
 		mob = mob->next;
 	}
 }
