@@ -1,12 +1,13 @@
 #include <mlx.h>
 #include <X11/keysym.h>
+#include <X11/keysymdef.h>
 #include <X11/X.h>
 #include <math.h> // check if allow
 #include "libft/srcs/include/libft.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <time.h>
-
+/*
 #define KEY_W			119
 #define KEY_A			97
 #define KEY_S			115
@@ -18,6 +19,7 @@
 #define KEY_UP_ARROW		65362
 #define KEY_RIGHT_ARROW		65363
 #define KEY_DOWN_ARROW		65364
+*/
 
 typedef struct	s_img {
 	void	*img;
