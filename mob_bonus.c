@@ -6,11 +6,12 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/02 16:16:23 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/03 17:47:47 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 int free_mob(t_data *game, t_movable **mob)
 {
 	t_movable	*tmp;
@@ -33,7 +34,7 @@ int check_mob(t_data *game)
 	mob = game->mob;
 	while (mob)
 	{
-		if (dist(mob->pos, game->hero.pos) < 50)
+		if (dist(mob->pos, game->hero.pos) < 20)
 			close_window(game);
 		mob = mob->next;
 	}
@@ -44,7 +45,8 @@ int	init_mob(t_data *game)
 {
 	int	i, j, random;
 	t_movable	*new;
-
+	
+	game->mob = 0;
 	i = -1;	
 	while (++i < game->map.h)
 	{
@@ -55,9 +57,8 @@ int	init_mob(t_data *game)
 			if (game->map.soil[j][i] == '0' && random < 10)
 			{
 				new = make_mob(make_point(i * game->map.def, j * game->map.def));
-				new->vel = make_point(1, 1);
-				new->height= 35;
-				new->width = 35;
+				new->height= 20;
+				new->width = 20;
 				new->face[0] = new_file_img("image/mob.xpm", game);
 				if (!new->face[0].img)
 					return (0);
@@ -94,6 +95,7 @@ t_movable	*make_mob(t_point pos)
 		return (0);
 	mob->pos = pos;
 	mob->next = NULL;
+	mob->vel = make_point(ft_random(-2, 2), ft_random(-2, 2));
 	return (mob);
 }
 
