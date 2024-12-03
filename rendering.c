@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/02 16:00:09 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/03 12:16:15 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,23 @@ void	refresh(t_data *game)
 
 int	render(void *data)
 {
+	static int count;
+
 	handle_input(data);
 	check_items(data);
-	//check_mob(data);
+	check_mob(data);
 	draw_map(data);
 	draw_collectable(data);
 	draw_exit(data);
 	draw_hero(data);
-	move_mob(data);
+	if (count > SPEED)
+	{
+		move_mob(data);
+		count = 0;
+	}
 	draw_mob(data);
 	refresh(data);
+	count++;
 	return (0);
 }
 
@@ -140,7 +147,7 @@ void	draw_map(t_data *game)
 			//	mlx_put_image_to_window (mlx, win, wa.img, i * def, j * def);
 				put_img_to_game(game, wa, i * def, j * def);
 			else
-	//			mlx_put_image_to_window (mlx, win, wa.img, i * def, j * def);
+			//	mlx_put_image_to_window (mlx, win, wa.img, i * def, j * def);
 				put_img_to_game(game, gr, i * def, j * def);
 		}
 	}

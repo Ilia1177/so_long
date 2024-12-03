@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/02 16:27:45 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/03 12:21:03 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,24 @@
 
 int handle_input(t_data *game)
 {
+	static int count;
+
     if (game->key_states[XK_Escape])
         close_window(game);
-	if (game->key_states[XK_w])
-		move_up(game);
-	if (game->key_states[XK_a])
-		move_left(game);
-	if (game->key_states[XK_s])
-		move_down(game);
-	if (game->key_states[XK_d])
-		move_right(game);
+
+	if (count > 6)
+	{
+		if (game->key_states[XK_w])
+			move_up(game);
+		if (game->key_states[XK_a])
+			move_left(game);
+		if (game->key_states[XK_s])
+			move_down(game);
+		if (game->key_states[XK_d])
+			move_right(game);
+		count = 0;
+	}
+	count++;
     return (0);
 }
 

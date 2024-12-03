@@ -7,6 +7,9 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <time.h>
+
+#define SPEED	15
+
 /*
 #define KEY_W			119
 #define KEY_A			97
