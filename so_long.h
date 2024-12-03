@@ -6,9 +6,8 @@
 #include "libft/srcs/include/libft.h"
 #include <fcntl.h>
 #include <stdio.h>
-#include <time.h>
 
-#define SPEED	15
+#define SPEED	1
 
 /*
 #define KEY_W			119
