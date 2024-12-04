@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:18 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/03 12:18:22 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/04 13:53:41 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,32 +85,6 @@ int	map_cmp(t_data *game)
 	return (1);
 }
 
-int	check_exit_and_collectible(t_data *game)
-{
-	int	i, j, exit, collectible;
-
-	exit = 0;
-	collectible = 0;
-	j = -1;
-	while (++j < game->map.h)
-	{
-		i = -1;
-		while (++i < game->map.w)
-		{
-			if (game->map.soil[j][i] == 'E')
-			{
-				if (exit)
-					return (0);
-				exit = 1;
-			}
-			if (game->map.soil[j][i] == 'C')
-				collectible++;	
-		}
-	}
-	if (!exit || !collectible)
-		return (0);
-	return (1);
-}
 
 int	check_map(t_data *game)
 {
@@ -187,15 +161,7 @@ int	measure_map(t_map *map, char *path)
 	return (1);
 }
 
-t_point	make_point(int x, int y)
-{
-	t_point	point;
 
-	point.x = x;
-	point.y = y;
-
-	return (point);
-}
 
 int	make_soil(t_map *map, char *path)
 {

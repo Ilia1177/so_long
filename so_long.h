@@ -2,26 +2,13 @@
 #include <X11/keysym.h>
 #include <X11/keysymdef.h>
 #include <X11/X.h>
-#include <math.h> // check if allow
 #include "libft/srcs/include/libft.h"
 #include <fcntl.h>
+#include <math.h>
 #include <stdio.h>
 
-#define SPEED	1
-
-/*
-#define KEY_W			119
-#define KEY_A			97
-#define KEY_S			115
-#define KEY_D			100
-#define KEY_ESC 		65307
-#define KEY_Q 			113
-#define KEY_R 			114
-#define KEY_LEFT_ARROW		65361
-#define KEY_UP_ARROW		65362
-#define KEY_RIGHT_ARROW		65363
-#define KEY_DOWN_ARROW		65364
-*/
+#define SPEED_MOB	0
+#define SPEED_PLA	0
 
 typedef struct	s_img {
 	void	*img;
@@ -85,30 +72,50 @@ typedef struct	s_data {
 	int     	key_states[99999];
 }				t_data;
 
-void			draw_circle(t_data *game, int x, int y, int size, int color);
+
+//	image_utils.c
+void			ft_put_pixel(t_data *data, int x, int y, int color);
+//	map.c
+int				make_map(t_map *map, char *path, int def);
+int				init_map(t_data *game, char *path, int def);
+int				init_flooded_map(t_data *game);
+int				map_cmp(t_data *game);
+int				check_map(t_data *game);
+int				flood_map(t_data *game, int i, int j);
+int				measure_map(t_map *map, char *path);
+int				make_soil(t_map *map, char *path);
+int				init_map(t_data *game, char *path, int def);
+void			print_map(t_map *map);
+
+//	utils.c
+t_point			make_point(int x, int y);
+double			dist(t_point a, t_point b);
+
+//	check.c
+int				check_pos(t_data *game, int x, int y);
+void			check_items(t_data *game);
+int				check_exit_and_collectible(t_data *game);
+	
+//	rendering.c
 void			draw_hero(t_data *game);
 void			draw_map(t_data *game);
 int				render(void *data);
-void			ft_put_pixel(t_data *data, int x, int y, int color);
 int				close_window(t_data *data);
-int				handle_no_event(void *data);
-int				handle_input(t_data *data);
-int				make_map(t_map *map, char *path, int def);
+void			draw_collectable(t_data *game);
+int				init_hero(t_data *game);
+int				game_init(t_data *game, char *path, int def);
+int				init_collectable(t_data *game);
+int				free_items(t_data *game, int i);
+int				count_collectable(t_data *game);
+//	input
 void			move_up(t_data *game);
 void			move_down(t_data *game);
 void			move_right(t_data *game);
 void			move_left(t_data *game);
 int				key_press(int keycode, t_data *data);
 int				key_release(int keycode, t_data *data); 
-void			animate(t_data *game);
-void			draw_collectable(t_data *game);
-int				init_hero(t_data *game);
-int				game_init(t_data *game, char *path, int def);
-int				init_map(t_data *game, char *path, int def);
-int				init_collectable(t_data *game);
-int				free_items(t_data *game, int i);
-int				count_collectable(t_data *game);
 
+int				handle_input(t_data *data);
 int				check_pos(t_data *game, int x, int y);
 
 t_img			new_img(int w, int h, t_data *game);
@@ -131,7 +138,7 @@ int				init_mob(t_data *game);
 t_movable		*make_mob(t_point pos);
 int				ft_random(int min, int max);
 void			ft_mobadd_back(t_movable **lst, t_movable *new);
-void	move_mob(t_data *game);
-double	dist(t_point a, t_point b);
-int check_mob(t_data *game);
-int free_mob(t_data *game,t_movable **mob);
+void			move_mob(t_data *game);
+double			dist(t_point a, t_point b);
+int				check_mob(t_data *game);
+int				free_mob(t_data *game,t_movable **mob);

@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/03 12:21:03 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/04 13:59:55 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int handle_input(t_data *game)
     if (game->key_states[XK_Escape])
         close_window(game);
 
-	if (count > 6)
+	if (count > SPEED_PLA)
 	{
 		if (game->key_states[XK_w])
 			move_up(game);
@@ -32,21 +32,6 @@ int handle_input(t_data *game)
 		count = 0;
 	}
 	count++;
-    return (0);
-}
-
-int key_press(int keycode, t_data *data)
-{
-    if (keycode >= 0 && keycode < 99999)
-        data->key_states[keycode] = 1;
-    return (0);
-}
-
-int key_release(int keycode, t_data *data)
-{
-	data->hero.frame = 0;
-    if (keycode >= 0 && keycode < 99999)
-        data->key_states[keycode] = 0;
     return (0);
 }
 
