@@ -95,12 +95,14 @@ double			dist(t_point a, t_point b);
 int				check_pos(t_data *game, int x, int y);
 void			check_items(t_data *game);
 int				check_exit_and_collectible(t_data *game);
-	
+//	cleaning.c
+
+int				close_window(t_data *data);
+
 //	rendering.c
 void			draw_hero(t_data *game);
 void			draw_map(t_data *game);
 int				render(void *data);
-int				close_window(t_data *data);
 void			draw_collectable(t_data *game);
 int				init_hero(t_data *game);
 int				game_init(t_data *game, char *path, int def);
