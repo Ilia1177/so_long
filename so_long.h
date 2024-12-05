@@ -7,7 +7,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#define SPEED_MOB	0
+#define SPEED_MOB	5
 #define SPEED_PLA	0
 
 typedef struct	s_img {
@@ -37,6 +37,7 @@ typedef struct	s_movable {
 	t_point				acc;
 	t_point				vel;
 	t_point				pos;
+	unsigned int		moves;
 	int					width;
 	int					height;
 	int					frame;
@@ -73,74 +74,75 @@ typedef struct	s_data {
 }				t_data;
 
 
-//	image_utils.c
-void			ft_put_pixel(t_data *data, int x, int y, int color);
+//	image_utils.c //
+
+unsigned int	get_pixel_img(t_img img, int x, int y);
+t_img			new_img(int w, int h, t_data *game);
+void			put_pixel_img(t_data *game, int x, int y, int color);
+void			put_img_to_game(t_data *game, t_img src, int x, int y);
+t_img			new_file_img(char *path, t_data *game);
+
 //	map.c
-int				make_map(t_map *map, char *path, int def);
-int				init_map(t_data *game, char *path, int def);
 int				init_flooded_map(t_data *game);
 int				map_cmp(t_data *game);
-int				check_map(t_data *game);
 int				flood_map(t_data *game, int i, int j);
 int				measure_map(t_map *map, char *path);
 int				make_soil(t_map *map, char *path);
-int				init_map(t_data *game, char *path, int def);
-void			print_map(t_map *map);
 
 //	utils.c
 t_point			make_point(int x, int y);
 double			dist(t_point a, t_point b);
+unsigned int	display_moves(void);
+int				key_press(int keycode, t_data *data);
+int				key_release(int keycode, t_data *data); 
 
-//	check.c
+//	check.c //
+int				check_map(t_data *game);
 int				check_pos(t_data *game, int x, int y);
 void			check_items(t_data *game);
 int				check_exit_and_collectible(t_data *game);
-//	cleaning.c
+int				count_collectable(t_data *game);
+//	cleaning.c //
 
+//int				free_items(t_data *game, int i);
+int				free_all(char **object, int i); //
 int				close_window(t_data *data);
 
-//	rendering.c
-void			draw_hero(t_data *game);
-void			draw_map(t_data *game);
+//	rendering.c	//
 int				render(void *data);
+void			draw_exit(t_data *game);
+void			draw_hero(t_data *game);
 void			draw_collectable(t_data *game);
+void			draw_map(t_data *game);
+
+//	initialisation
 int				init_hero(t_data *game);
+int				init_map(t_data *game, char *path, int def);
 int				game_init(t_data *game, char *path, int def);
 int				init_collectable(t_data *game);
-int				free_items(t_data *game, int i);
-int				count_collectable(t_data *game);
-//	input
+int				load_images(t_data *game);
+
+//	input //
+int				handle_input(t_data *data);
 void			move_up(t_data *game);
 void			move_down(t_data *game);
 void			move_right(t_data *game);
 void			move_left(t_data *game);
-int				key_press(int keycode, t_data *data);
-int				key_release(int keycode, t_data *data); 
 
-int				handle_input(t_data *data);
-int				check_pos(t_data *game, int x, int y);
-
-t_img			new_img(int w, int h, t_data *game);
-t_img			new_file_img(char * path, t_data *game);
-void			put_img_to_game(t_data *game, t_img src, int x, int y);
-void			put_pixel_img(t_data *game, int x, int y, int color);
-unsigned int	get_pixel_img(t_img img, int x, int y);
-void			refresh(t_data *game);
-int				init_exit(t_data *game);
-void			draw_exit(t_data *game);
-int				flood_map(t_data *game, int i, int j);
-int				check_map(t_data *game);
-int				free_all(char **object, int i);
-int				make_soil(t_map *map, char *path);
-int				load_images(t_data *game);
-t_point			make_point(int x, int y);
-
-void			draw_mob(t_data *game);
-int				init_mob(t_data *game);
-t_movable		*make_mob(t_point pos);
+//	utils_bonus //
+t_point			add_point(t_point a, t_point b);
 int				ft_random(int min, int max);
+t_point			multiply_point(t_point a, int x);
+
+//	mob_bonus //
+int 			free_mob(t_data *game, t_movable **mob);
+int 			check_mob(t_data *game);
+int				init_mob(t_data *game);
 void			ft_mobadd_back(t_movable **lst, t_movable *new);
+t_movable		*mk_mob(t_point pos);
+
+//	mob2_bonus
+void			draw_mob(t_data *game);
+int				valid_objectpos(t_data *game, t_movable *obj, t_point pos);
 void			move_mob(t_data *game);
-double			dist(t_point a, t_point b);
-int				check_mob(t_data *game);
-int				free_mob(t_data *game,t_movable **mob);
+int				ft_random(int min, int max);

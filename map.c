@@ -6,34 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:18 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/04 13:53:41 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/05 17:23:37 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	print_map(t_map *map)
-{
-	int i;
-	int j;
-	int w;
-	int h;
-
-	w = map->w;
-	h = map->h;
-	j = -1;
-	while (++j < h)
-	{
-		i = -1;
-		while (++i < w)
-		{
-			ft_printf("%c", map->soil[j][i]);
-		}
-		ft_printf("\n");
-	}
-	ft_printf("-----------------\n");
-	ft_printf("-----------------\n");
-}
 
 int	init_flooded_map(t_data *game)
 {
@@ -86,25 +63,7 @@ int	map_cmp(t_data *game)
 }
 
 
-int	check_map(t_data *game)
-{
-	int	j;
-	int x;
-	int y;
 
-	x = game->hero.pos.x / game->map.def;
-	y = game->hero.pos.y / game->map.def;
-	if (!init_flooded_map(game))
-		return (0);
-	flood_map(game, x, y);
-	if (!map_cmp(game) || game->map.h < 3 || game->map.w < 3)
-		return (0);
-	if (game->map.h > 15 || game->map.w > 15)
-		return (0);
-	if (!check_exit_and_collectible(game))
-		return (0);
-	return (1);
-}
 
 int	flood_map(t_data *game, int i, int j)
 {
@@ -161,8 +120,6 @@ int	measure_map(t_map *map, char *path)
 	return (1);
 }
 
-
-
 int	make_soil(t_map *map, char *path)
 {
 	char	*mapline;
@@ -186,17 +143,5 @@ int	make_soil(t_map *map, char *path)
 		mapline = get_next_line(map->fd);
 	}
 	free(mapline);
-	return (1);
-}
-
-int	init_map(t_data *game, char *path, int def)
-{
-	char	*mapline;
-	
-	game->map.def = def;
-	if(!measure_map(&game->map, path))
-		return (0);
-	if(!make_soil(&game->map, path))
-		return (0);
 	return (1);
 }

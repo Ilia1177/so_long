@@ -2,3 +2,4 @@ mlx_linux/
 mlx/
 *.swo
 *.swp
+*.o

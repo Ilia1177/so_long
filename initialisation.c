@@ -6,27 +6,22 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/04 13:55:28 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/05 17:29:54 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	count_collectable(t_data *game)
+int	init_map(t_data *game, char *path, int def)
 {
-	int	j;
-	int	i;
-
-	game->items_nb = 0;
-	j = -1;
-	while (++j < game->map.h)
-	{
-		i = -1;
-		while (++i < game->map.w)
-			if (game->map.soil[j][i] == 'C')
-				game->items_nb++;
-	}
-	return (game->items_nb);
+	char	*mapline;
+	
+	game->map.def = def;
+	if(!measure_map(&game->map, path))
+		return (0);
+	if(!make_soil(&game->map, path))
+		return (0);
+	return (1);
 }
 
 int	init_collectable(t_data *game)
@@ -82,7 +77,6 @@ int	init_exit(t_data *game)
 	return (1);
 }
 
-
 int	init_hero(t_data *game)
 {
 	int		i, j;
@@ -107,67 +101,24 @@ int	init_hero(t_data *game)
 	return (1);
 }
 
-int load_images(t_data *game)
-{
-	int	i;
-
-	i = -1;
-	while (++i < game->items_nb)
-	{
-		game->item[i].img = new_file_img("./image/item.xpm", game);
-		if (!game->item[i].img.img)
-			return (0);
-	}
-	game->exit.img = new_file_img("./image/exit.xpm", game);
-	if (!game->exit.img.img)
-		return (0);
-	game->hero.face[0] = new_file_img("./image/sprite1.xpm", game);
-	game->hero.face[1] = new_file_img("./image/sprite2.xpm", game);
-	game->hero.face[2] = new_file_img("./image/sprite3.xpm", game);
-	game->hero.face[3] = new_file_img("./image/sprite4.xpm", game);
-	if (!game->hero.face[0].img || !game->hero.face[1].img
-		   	|| !game->hero.face[2].img || !game->hero.face[3].img)
-		return (0);
-	game->map.ground = new_file_img("./image/ground.xpm", game);
-	if (!game->map.ground.img)
-		return (0);
-	game->map.wall = new_file_img("./image/wall.xpm", game);
-	if (!game->map.wall.img)
-		return (0);
-	return (1);
-}
-
 int	game_init(t_data *game, char *path, int def)
 {	
-	int		i, j;
-	void	*mlx;
-	void	*win;
+	int	i;
 
 	if (!init_map(game, path, def))
 		return (0);
 	game->height = game->map.h * game->map.def;
 	game->width = game->map.w * game->map.def;
 	game->mlx = mlx_init();
+	if (!game->mlx)
+		return (0);
 	game->win = mlx_new_window(game->mlx, game->width, game->height, "HZD$");
 	if (!game->win)
 		return (0);
-	if (!game->mlx || !game->win)
-		return (0);
 	game->img = new_img(game->width, game->height, game);
-	if (!init_hero(game))
+	if (!init_hero(game) || !init_collectable(game) || !init_exit(game))
 		return (0);
-	if (!init_collectable(game))
-		return (0);
-	if (!init_exit(game))
-		return (0);
-	if (!check_map(game))
-	{
-		ft_printf("Map is invalid !\n");
-		return (0);
-	}
-	if (!init_mob(game))
-		return (0);
-	if (!load_images(game))
+	if (!check_map(game) || !init_mob(game) || !load_images(game))
 		return (0);
 	i = -1;
     while (++i < 99999)

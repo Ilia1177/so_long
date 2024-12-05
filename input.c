@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/04 13:59:55 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/05 15:24:17 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int handle_input(t_data *game)
 
 	if (count > SPEED_PLA)
 	{
-		if (game->key_states[XK_w])
+		if (game->key_states[XK_w] || game->key_states[XK_Up])
 			move_up(game);
-		if (game->key_states[XK_a])
+		if (game->key_states[XK_a] || game->key_states[XK_Left])
 			move_left(game);
-		if (game->key_states[XK_s])
+		if (game->key_states[XK_s] || game->key_states[XK_Down])
 			move_down(game);
-		if (game->key_states[XK_d])
+		if (game->key_states[XK_d] || game->key_states[XK_Right])
 			move_right(game);
 		count = 0;
 	}
@@ -48,7 +48,10 @@ void	move_down(t_data *game)
 	if (!check_pos(game, x + game->hero.width, y))
 		return ;
 	else
+	{
 		game->hero.pos.y += 1;
+		display_moves();
+	}
 }
 
 void	move_up(t_data *game)
@@ -64,7 +67,10 @@ void	move_up(t_data *game)
 	if (!check_pos(game, x + game->hero.width, y))
 		return ;
 	else
+	{
 		game->hero.pos.y -= 1;
+		display_moves();
+	}
 }
 
 void	move_right(t_data *game)
@@ -80,7 +86,10 @@ void	move_right(t_data *game)
 	if (!check_pos(game, x, y + game->hero.height))
 		return ;
 	else
+	{
 		game->hero.pos.x += 1;
+		display_moves();
+	}
 }
 
 void	move_left(t_data *game)
@@ -96,5 +105,8 @@ void	move_left(t_data *game)
 	if (!check_pos(game, x, y + game->hero.height))
 		return ;
 	else
+	{
 		game->hero.pos.x -= 1;
+		display_moves();
+	}
 }

@@ -13,7 +13,21 @@ else
 endif
 
 LIBFT = libft/libft.a
-SRCS = utils.c check.c cleaning.c so_long.c rendering.c initialisation.c input.c image_utils.c map.c mob_bonus.c
+
+SRCS = utils.c\
+	   load_image.c\
+	   check.c\
+	   cleaning.c\
+	   so_long.c\
+	   rendering.c\
+	   initialisation.c\
+	   input.c\
+	   image_utils.c\
+	   map.c\
+	   mob_bonus.c\
+	   mob2_bonus.c\
+	   utils_bonus.c\
+	   
 OBJS = $(SRCS:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 CC = cc

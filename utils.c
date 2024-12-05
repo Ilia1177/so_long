@@ -6,11 +6,16 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:53:41 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/04 13:55:57 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/05 15:26:35 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	refresh(t_data *game)
+{
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+}
 
 t_point	make_point(int x, int y)
 {
@@ -42,5 +47,12 @@ int key_release(int keycode, t_data *data)
     return (0);
 }
 
+unsigned int	display_moves(void)
+{
+	static unsigned int	moves;
 
+	moves++;
+	ft_printf("%u\n", moves);
+	return (moves);
+}
 

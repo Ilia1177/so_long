@@ -6,16 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/04 14:11:36 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/05 15:26:43 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	refresh(t_data *game)
-{
-	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
-}
 
 int	render(void *data)
 {

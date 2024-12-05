@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/03 17:47:47 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/05 15:49:45 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,24 @@ int free_mob(t_data *game, t_movable **mob)
 
 int check_mob(t_data *game)
 {
-	t_movable *mob;
+	t_movable	*mob;
+	t_movable	*hero;
+	t_point		hero_pos;
+	t_point		mob_pos;
+	int			dist_min;
 
+	if (!game->mob)
+		return (0);
 	mob = game->mob;
+	hero = &game->hero;
+	dist_min = (game->hero.width/2) + (mob->width / 2);
+	hero_pos.x = hero->pos.x + hero->width / 2;
+	hero_pos.y = hero->pos.y + hero->height / 2;
 	while (mob)
 	{
-		if (dist(mob->pos, game->hero.pos) < 20)
+		mob_pos.x = mob->pos.x + mob->width / 2;
+		mob_pos.y = mob->pos.y + mob->height / 2;
+		if (dist(mob_pos, hero_pos) < dist_min)
 			close_window(game);
 		mob = mob->next;
 	}
@@ -54,9 +66,9 @@ int	init_mob(t_data *game)
 		while (++j < game->map.w)
 		{
 			random = ft_random(0, 100);
-			if (game->map.soil[j][i] == '0' && random < 10)
+			if (game->map.soil[j][i] == '0' && random < 5)
 			{
-				new = make_mob(make_point(i * game->map.def, j * game->map.def));
+				new = mk_mob(make_point(i * game->map.def, j * game->map.def));
 				new->height= 20;
 				new->width = 20;
 				new->face[0] = new_file_img("image/mob.xpm", game);
@@ -86,7 +98,7 @@ void	ft_mobadd_back(t_movable **lst, t_movable *new)
 	}
 }
 
-t_movable	*make_mob(t_point pos)
+t_movable	*mk_mob(t_point pos)
 {
 	t_movable	*mob;
 
@@ -100,99 +112,4 @@ t_movable	*make_mob(t_point pos)
 }
 
 
-void	draw_mob(t_data *game)
-{
-	t_movable	*move;
-
-	move = game->mob;
-
-	while (move)
-	{
-		put_img_to_game(game, move->face[0], move->pos.x, move->pos.y);
-		move = move->next;
-	}
-}
-
-t_point	add_point(t_point a, t_point b)
-{
-	t_point res;
-
-	res.x = a.x + b.x;
-	res.y = a.y + b.y;
-	return (res);
-}
-
-int	valid_objectpos(t_data *game, t_movable *obj, t_point pos)
-{
-	int i1;
-	int	j1;
-	int i2;
-	int j2;
-	char **map;
-
-	map = game->map.soil;
-	i1 = pos.x / game->map.def;
-	j1 = pos.y / game->map.def;
-	i2 = (pos.x + obj->width) / game->map.def;
-	j2 = (pos.y + obj->height) / game->map.def;
-	if (pos.x >= game->width || pos.y >= game->height)
-		return (0);
-	if (pos.x < 0 || pos.y < 0)
-		return (0);
-	if (map[j1][i1] == '1' || map[j1][i2] == '1' 
-		|| map[j2][i1] == '1' || map[j2][i2] == '1')
-		return (0);
-	else if (map[j1][i1] && map[j1][i2] && map[j2][i1] && map[j2][i2])
-		return (1);
-	return (0);
-}
-
-t_point	multiply_point(t_point a, int x)
-{
-	t_point	res;
-
-	res.x = a.x * x;
-	res.y = a.y * x;
-	return (res);
-}
-
-void	move_mob(t_data *game)
-{
-	t_movable	*mob;
-	t_point		new_pos_x;
-	t_point		new_pos_y;
-
-	mob = game->mob;
-	while (mob)
-	{
-		new_pos_x = add_point(mob->pos, make_point(mob->vel.x, 0));
-		new_pos_y = add_point(mob->pos, make_point(0, mob->vel.y));
-		if (valid_objectpos(game, mob, new_pos_x))
-			mob->pos.x = new_pos_x.x;
-		else
-			mob->vel.x *= -1;
-		if (valid_objectpos(game, mob, new_pos_y))
-			mob->pos.y = new_pos_y.y;
-		else 
-			mob->vel.y *= -1;
-		mob = mob->next;
-	}
-}
-
-int	ft_random(int min, int max)
-{
-	int				fd;
-	int				i;
-	int				n;
-	int				range;
-	unsigned int	random_value;
-
-	fd = open("/dev/random", O_RDONLY);
-	if (fd <= 0)
-		return (0);
-	n = read(fd, &random_value, sizeof(random_value));
-
-    range = max - min + 1;
-    return (random_value % range) + min;
-}
 
