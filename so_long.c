@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:52 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 14:39:37 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 16:57:07 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int ac, char **av)
 	if(!game_init(&game, av[1], 50))
 	{
 		perror("init ");
-		close_window(&game);
 		return (0);
 	}
 	mlx_loop_hook(game.mlx, &render, &game);

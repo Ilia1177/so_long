@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:59:04 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 11:25:34 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 18:28:56 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	free_all(char **object, int i)
 	free(object);
 	return (0);
 }
+
 void	destroy_counter(t_data *game)
 {
 	int	i;
@@ -29,6 +30,12 @@ void	destroy_counter(t_data *game)
 		mlx_destroy_image(game->mlx, game->counter.num[i].img);
 		i++;
 	}
+}
+
+int	free_line(char *line)
+{
+	free(line);
+	return (0);
 }
 
 int	close_window(t_data *data)
@@ -43,7 +50,6 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx, data->map.wall.img);
 	mlx_destroy_image(data->mlx, data->exit.img.img);
 	free_mob(data, &data->mob);
-	free_all(data->flooded_map.soil, data->map.h);
 	free_all(data->map.soil, data->map.h);
 	i = -1;
 	while (++i < data->items_nb)

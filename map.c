@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:18 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 13:56:38 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 19:09:12 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int	init_flooded_map(t_data *game)
 {
-	int w, h, i, j;
+	int	w;
+	int	h;
+	int	i;
+	int	j;
 
 	w = game->map.w;
 	h = game->map.h;
@@ -27,6 +30,8 @@ int	init_flooded_map(t_data *game)
 	while (++j < h)
 	{
 		game->flooded_map.soil[j] = malloc(sizeof (char) * w);
+		if (!game->flooded_map.soil[j])
+			return (free_all(game->flooded_map.soil, j));
 		i = -1;
 		while (++i < w)
 			game->flooded_map.soil[j][i] = '0';
@@ -36,7 +41,8 @@ int	init_flooded_map(t_data *game)
 
 int	map_cmp(t_data *game)
 {
-	int	i, j;
+	int		i;
+	int		j;
 	char	c;
 
 	j = -1;
@@ -54,16 +60,13 @@ int	map_cmp(t_data *game)
 			if (c == 'C')
 				if (game->flooded_map.soil[j][i] != 'V')
 					return (0);
-			if (j == 0 || j == game->map.h - 1 || i == 0 || i == game->map.w - 1)
+			if (j == 0 || j == game->map.h -1 || i == 0 || i == game->map.w -1)
 				if (c != '1')
 					return (0);
 		}
 	}
 	return (1);
 }
-
-
-
 
 int	flood_map(t_data *game, int i, int j)
 {
@@ -93,33 +96,52 @@ int	flood_map(t_data *game, int i, int j)
 
 int	measure_map(t_map *map, char *map_name)
 {
-	int		width, height;
 	char	*mapline;
 	char	*path;
 
 	path = ft_strjoin("./maps/", map_name);
+	if (!path)
+		return (0);
 	map->fd = open(path, O_RDONLY);
 	free(path);
-	if (map->fd < 0)
-		return (0);
 	mapline = get_next_line(map->fd);
-	width = ft_strnlen(mapline, '\n');
-	height = 0;
-	while (mapline && ft_strcmp(mapline, ""))
+	if (!mapline)
+		return (0);
+	map->w = ft_strnlen(mapline, '\n');
+	map->h = 0;
+	while (mapline)
 	{
-		if (ft_strnlen(mapline, '\n') != width)
-		{
-			free(mapline);
-			return (0);
-		}
-		height++;
+		if (ft_strnlen(mapline, '\n') != map->w)
+			return (free_line(mapline));
+		map->h++;
 		free(mapline);
 		mapline = get_next_line(map->fd);
 	}
 	free(mapline);
 	close(map->fd);
-	map->h = height;
-	map->w = width;
+	return (1);
+}
+
+int	fill_soil(t_map *map)
+{
+	char	*mapline;
+	int		i;
+	int		j;
+
+	mapline = get_next_line(map->fd);
+	j = -1;
+	while (++j < map->h)
+	{
+		map->soil[j] = malloc(sizeof(char) * map->w);
+		if (!map->soil[j])
+			return (free_all(map->soil, j));
+		i = -1;
+		while (++i < map->w)
+			map->soil[j][i] = mapline[i];
+		free(mapline);
+		mapline = get_next_line(map->fd);
+	}
+	free(mapline);
 	return (1);
 }
 
@@ -130,25 +152,16 @@ int	make_soil(t_map *map, char *map_name)
 	int		j;
 	char	*path;
 
-	map->soil = malloc(sizeof(char*) * map->h);
-	if (!map->soil)
-		return (0);
 	path = ft_strjoin("./maps/", map_name);
+	if (!path)
+		return (0);
 	map->fd = open(path, O_RDONLY);
 	free(path);
-	mapline = get_next_line(map->fd);
-	j = -1;
-	while (++j < map->h)
-	{
-		map->soil[j] = malloc(sizeof(char) * map->w);
-		if (!map->soil[j])
-			return (0);
-		i = -1;
-		while (++i < map->w)
-			map->soil[j][i] = mapline[i];
-		free(mapline);
-		mapline = get_next_line(map->fd);
-	}
-	free(mapline);
+	map->soil = malloc(sizeof (char *) * map->h);
+	if (!map->soil)
+		return (0);
+	if (!fill_soil(map))
+		return (0);
+	close(map->fd);
 	return (1);
 }

@@ -6,19 +6,18 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 11:17:27 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 18:38:32 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int handle_input(t_data *game)
+int	handle_input(t_data *game)
 {
-	static int count;
+	static int	count;
 
-    if (game->key_states[XK_Escape])
-        close_window(game);
-
+	if (game->key_states[XK_Escape])
+		close_window(game);
 	if (count > SPEED_PLA)
 	{
 		if (game->key_states[XK_w] || game->key_states[XK_Up])
@@ -32,17 +31,17 @@ int handle_input(t_data *game)
 		count = 0;
 	}
 	count++;
-    return (0);
+	return (0);
 }
 
 void	move_down(t_data *game)
 {
-	int x;
+	int	x;
 	int	y;
 
-    game->hero.frame = (game->hero.frame + 1) % 4;
+	game->hero.frame = (game->hero.frame + 1) % 4;
 	x = game->hero.pos.x;
-	y = game->hero.pos.y + game->hero.height + 1; 
+	y = game->hero.pos.y + game->hero.height + 1;
 	if (!check_pos(game, x, y))
 		return ;
 	if (!check_pos(game, x + game->hero.width, y))
@@ -57,10 +56,10 @@ void	move_down(t_data *game)
 
 void	move_up(t_data *game)
 {
-	int x;
+	int	x;
 	int	y;
 
-    game->hero.frame = (game->hero.frame + 1) % 4;
+	game->hero.frame = (game->hero.frame + 1) % 4;
 	x = game->hero.pos.x;
 	y = game->hero.pos.y - 1;
 	if (!check_pos(game, x, y))
@@ -80,7 +79,7 @@ void	move_right(t_data *game)
 	int	x;
 	int	y;
 
-    game->hero.frame = (game->hero.frame + 1) % 4;
+	game->hero.frame = (game->hero.frame + 1) % 4;
 	x = game->hero.pos.x + game->hero.width + 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))
@@ -100,7 +99,7 @@ void	move_left(t_data *game)
 	int	x;
 	int	y;
 
-    game->hero.frame = (game->hero.frame + 1) % 4;
+	game->hero.frame = (game->hero.frame + 1) % 4;
 	x = game->hero.pos.x - 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))

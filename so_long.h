@@ -108,12 +108,13 @@ int				check_map(t_data *game);
 int				check_pos(t_data *game, int x, int y);
 void			check_items(t_data *game);
 int				check_exit_and_collectible(t_data *game);
-int				count_collectable(t_data *game);
+int				count_object(t_data *game, int object);
 //	cleaning.c //
 
 //int				free_items(t_data *game, int i);
 int				free_all(char **object, int i); //
 int				close_window(t_data *data);
+int				free_line(char *line);
 
 //	rendering.c	//
 int				render(void *data);
@@ -127,6 +128,7 @@ int				init_hero(t_data *game);
 int				init_map(t_data *game, char *path, int def);
 int				game_init(t_data *game, char *path, int def);
 int				init_collectable(t_data *game);
+int				init_exit(t_data *game);
 
 //	load_image
 int				load_images(t_data *game);

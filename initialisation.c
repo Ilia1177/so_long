@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 14:49:54 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 18:27:47 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,24 @@
 int	init_map(t_data *game, char *path, int def)
 {
 	game->map.def = def;
-	if(!measure_map(&game->map, path))
+	if (!measure_map(&game->map, path))
 		return (0);
-	if(!make_soil(&game->map, path))
+	if (!make_soil(&game->map, path))
 		return (0);
+	game->items_nb = count_object(game, 'C');
+	if (game->items_nb < 1)
+		return (free_all(game->map.soil, game->map.h));
+	if (count_object(game, 'E') != 1 || count_object(game, 'P') != 1)
+		return (free_all(game->map.soil, game->map.h));
+	init_hero(game);
+	init_exit(game);
+	if (!init_collectable(game))
+		return (free_all(game->map.soil, game->map.h));
+	if (!check_map(game))
+	{
+		free(game->item);
+		return (free_all(game->map.soil, game->map.h));
+	}
 	return (1);
 }
 
@@ -28,26 +42,22 @@ int	init_collectable(t_data *game)
 	int	j;
 	int	k;
 
-	if (count_collectable(game))
+	game->item = (t_item *)malloc(sizeof(t_item) * game->items_nb);
+	if (!game->item)
+		return (0);
+	k = 0;
+	j = -1;
+	while (++j < game->map.h)
 	{
-		game->item = (t_item *)malloc(sizeof(t_item) * game->items_nb);
-		if (!game->item)
-			return (0);
-		k = 0;
-		j = -1;
-		while (++j < game->map.h)
+		i = -1;
+		while (++i < game->map.w)
 		{
-			i = -1;
-			while (++i < game->map.w)
+			if (game->map.soil[j][i] == 'C')
 			{
-				if (game->map.soil[j][i] == 'C')
-				{
-					game->item[k].exist = 1;
-					game->item[k].width = 50;
-					game->item[k].height = 50;
-					game->item[k].pos = make_point(i * game->map.def, j * game->map.def);
-					k++;
-				}
+				game->item[k].exist = 1;
+				game->item[k].pos.x = i * game->map.def;
+				game->item[k].pos.y = j * game->map.def;
+				k++;
 			}
 		}
 	}
@@ -56,7 +66,8 @@ int	init_collectable(t_data *game)
 
 int	init_exit(t_data *game)
 {
-	int	i, j;
+	int	i;
+	int	j;
 
 	j = -1;
 	while (++j < game->map.h)
@@ -77,7 +88,8 @@ int	init_exit(t_data *game)
 
 int	init_hero(t_data *game)
 {
-	int		i, j;
+	int	i;
+	int	j;
 
 	game->hero.frame = 0;
 	game->hero.width = 40;
@@ -100,7 +112,7 @@ int	init_hero(t_data *game)
 }
 
 int	game_init(t_data *game, char *path, int def)
-{	
+{
 	int	i;
 
 	if (!init_map(game, path, def))
@@ -117,17 +129,12 @@ int	game_init(t_data *game, char *path, int def)
 	if (!game->win)
 		return (0);
 	game->img = new_img(game->width, game->height, game);
-	if (!init_hero(game) || !init_collectable(game) || !init_exit(game))
+	if (!game->img.img)
 		return (0);
-	if (!init_mob(game) || !load_images(game))
+	if (!init_mob(game) ||!load_images(game))
 		return (0);
-	if (!check_map(game)) 
-	{
-		ft_printf("Error\nMap is invalid!\n");
-		return (0);
-	}
 	i = -1;
-    while (++i < 99999)
+	while (++i < 99999)
 		game->key_states[i] = 0;
 	return (1);
 }
