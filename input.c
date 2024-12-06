@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/05 15:24:17 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 11:17:27 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	move_down(t_data *game)
 	else
 	{
 		game->hero.pos.y += 1;
-		display_moves();
+		game->counter.moves++;
+		ft_printf("%u\n", game->counter.moves);
 	}
 }
 
@@ -69,7 +70,8 @@ void	move_up(t_data *game)
 	else
 	{
 		game->hero.pos.y -= 1;
-		display_moves();
+		game->counter.moves++;
+		ft_printf("%u\n", game->counter.moves);
 	}
 }
 
@@ -88,7 +90,8 @@ void	move_right(t_data *game)
 	else
 	{
 		game->hero.pos.x += 1;
-		display_moves();
+		game->counter.moves++;
+		ft_printf("%u\n", game->counter.moves);
 	}
 }
 
@@ -107,6 +110,7 @@ void	move_left(t_data *game)
 	else
 	{
 		game->hero.pos.x -= 1;
-		display_moves();
+		game->counter.moves++;
+		ft_printf("%u\n", game->counter.moves);
 	}
 }

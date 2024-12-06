@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/05 15:49:45 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 13:58:12 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	init_mob(t_data *game)
 				new = mk_mob(make_point(i * game->map.def, j * game->map.def));
 				new->height= 20;
 				new->width = 20;
-				new->face[0] = new_file_img("image/mob.xpm", game);
+				new->face[0] = new_file_img("textures/mob.xpm", game);
 				if (!new->face[0].img)
 					return (0);
 				ft_mobadd_back(&game->mob, new);

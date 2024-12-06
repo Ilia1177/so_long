@@ -10,6 +10,8 @@
 #define SPEED_MOB	5
 #define SPEED_PLA	0
 
+
+
 typedef struct	s_img {
 	void	*img;
 	char	*addr;
@@ -19,6 +21,11 @@ typedef struct	s_img {
 	int		w;
 	int		h;
 }				t_img;
+
+typedef struct	s_count {
+	t_img	num[10];
+	int		moves;
+}				t_count;
 
 typedef struct	s_point {
 	int	x;
@@ -56,7 +63,7 @@ typedef struct	s_map{
 }				t_map;
 
 typedef struct	s_data {
-
+	t_count		counter;
 	t_item		exit;
 	t_item		*item;
 	t_movable	hero;
@@ -120,7 +127,11 @@ int				init_hero(t_data *game);
 int				init_map(t_data *game, char *path, int def);
 int				game_init(t_data *game, char *path, int def);
 int				init_collectable(t_data *game);
+
+//	load_image
 int				load_images(t_data *game);
+int				load_items_images(t_data *game);
+int				moves_on_screen(t_data *game);
 
 //	input //
 int				handle_input(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:18 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/05 17:23:37 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 13:56:38 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,15 @@ int	flood_map(t_data *game, int i, int j)
 	return (1);
 }
 
-int	measure_map(t_map *map, char *path)
+int	measure_map(t_map *map, char *map_name)
 {
 	int		width, height;
 	char	*mapline;
+	char	*path;
 
+	path = ft_strjoin("./maps/", map_name);
 	map->fd = open(path, O_RDONLY);
+	free(path);
 	if (map->fd < 0)
 		return (0);
 	mapline = get_next_line(map->fd);
@@ -120,15 +123,19 @@ int	measure_map(t_map *map, char *path)
 	return (1);
 }
 
-int	make_soil(t_map *map, char *path)
+int	make_soil(t_map *map, char *map_name)
 {
 	char	*mapline;
-	int		i, j;
+	int		i;
+	int		j;
+	char	*path;
 
 	map->soil = malloc(sizeof(char*) * map->h);
 	if (!map->soil)
 		return (0);
+	path = ft_strjoin("./maps/", map_name);
 	map->fd = open(path, O_RDONLY);
+	free(path);
 	mapline = get_next_line(map->fd);
 	j = -1;
 	while (++j < map->h)

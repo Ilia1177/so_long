@@ -27,9 +27,10 @@ SRCS = utils.c\
 	   mob_bonus.c\
 	   mob2_bonus.c\
 	   utils_bonus.c\
+	   counter_bonus.c\
 	   
 OBJS = $(SRCS:.c=.o)
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 CC = cc
 
 all : $(MLX_LIB) $(NAME) $(LIBFT)

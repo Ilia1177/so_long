@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:53:41 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/05 15:26:35 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/06 11:06:26 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,3 @@ int key_release(int keycode, t_data *data)
         data->key_states[keycode] = 0;
     return (0);
 }
-
-unsigned int	display_moves(void)
-{
-	static unsigned int	moves;
-
-	moves++;
-	ft_printf("%u\n", moves);
-	return (moves);
-}
-
