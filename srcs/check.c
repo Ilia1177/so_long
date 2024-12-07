@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:50:08 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 18:28:19 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 16:52:26 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 int	count_object(t_data *game, int object)
 {
@@ -60,7 +60,13 @@ int	check_map(t_data *game)
 void	check_items(t_data *game)
 {
 	int	i;
+	int	x;
+	int	y;
+	char *warning;
 
+	x = game->exit.pos.x - 50;
+	y = game->exit.pos.y + 25;
+	warning = "You have to get every collectable first!";
 	i = 0;
 	while (i < game->items_nb)
 	{
@@ -68,8 +74,27 @@ void	check_items(t_data *game)
 			game->item[i].exist = 0;
 		i++;
 	}
-	if (dist(game->hero.pos, game->exit.pos) < 10)
-		close_window(game);
+	if (dist(game->hero.pos, game->exit.pos) < 50)
+	{
+		if (!items_exist(game))
+			close_window(game);
+		else
+			mlx_string_put(game->mlx, game->win, x, y, 0xFFFFFFFF, warning);
+	}
+}
+
+int	items_exist(t_data *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < game->items_nb)
+	{
+		if (game->item[i].exist)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	check_pos(t_data *game, int x, int y)

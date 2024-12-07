@@ -6,15 +6,15 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:11:35 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/05 16:12:39 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 16:07:55 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 t_point	add_point(t_point a, t_point b)
 {
-	t_point res;
+	t_point	res;
 
 	res.x = a.x + b.x;
 	res.y = a.y + b.y;
@@ -42,7 +42,7 @@ int	ft_random(int min, int max)
 	if (fd <= 0)
 		return (0);
 	n = read(fd, &random_value, sizeof(random_value));
-
-    range = max - min + 1;
-    return (random_value % range) + min;
+	close(fd);
+	range = max - min + 1;
+	return ((random_value % range) + min);
 }

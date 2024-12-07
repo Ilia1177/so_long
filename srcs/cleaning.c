@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:59:04 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 18:28:56 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 14:52:51 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 int	free_all(char **object, int i)
 {

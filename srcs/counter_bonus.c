@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:00:20 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 18:53:55 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 14:52:40 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 void	select_img(t_data *game, char c, int x)
 {

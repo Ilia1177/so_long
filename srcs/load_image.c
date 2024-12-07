@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:17:17 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 18:40:04 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 14:53:16 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 int	load_counter_images(t_data *game)
 {

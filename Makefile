@@ -1,6 +1,8 @@
 NAME = so_long
 UNAME = $(shell uname)
-MLX_DIR = ./mlx
+SRCS_DIR = srcs
+OBJS_DIR = objs
+MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx_$(UNAME).a
 CLONE = mlx
 
@@ -12,7 +14,7 @@ else
 	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -lm -lz -framework OpenGL -framework AppKit
 endif
 
-LIBFT = libft/libft.a
+LIBFT = libft/bin/libft.a
 
 SRCS = utils.c\
 	   load_image.c\
@@ -24,12 +26,16 @@ SRCS = utils.c\
 	   input.c\
 	   image_utils.c\
 	   map.c\
+	   flood_map.c\
 	   mob_bonus.c\
 	   mob2_bonus.c\
 	   utils_bonus.c\
 	   counter_bonus.c\
-	   
-OBJS = $(SRCS:.c=.o)
+
+SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
+
+OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+
 CFLAGS = -Wall -Wextra -Werror -g
 CC = cc
 
@@ -38,7 +44,8 @@ all : $(MLX_LIB) $(NAME) $(LIBFT)
 $(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
 	$(CC) $^ $(MLX_FLAGS) -o $(NAME) 
 
-%.o: %.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+	mkdir -p $(OBJS_DIR)
 	$(CC) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES)
 
 $(MLX_LIB): $(CLONE) 
@@ -52,12 +59,13 @@ $(LIBFT) :
 
 clean	:
 	make clean -C libft
-	$(RM) $(OBJS)
+	make clean -C $(MLX_DIR)
+	rm -fr $(OBJS_DIR)
 
 fclean	: clean
-	rm $(NAME)
-	make clean -C $(MLX_DIR)
 	make fclean -C libft
+	rm -fr $(MLX_DIR)
+	rm $(NAME)
 
 re		: fclean all
 

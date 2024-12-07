@@ -6,19 +6,15 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 12:26:52 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 16:04:45 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
-void	refresh(t_data *game)
-{
-	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
-}
 int	render(void *data)
 {
-	static int count;
+	static int	count;
 
 	check_items(data);
 	check_mob(data);
@@ -46,34 +42,23 @@ void	draw_exit(t_data *game)
 
 void	draw_hero(t_data *game)
 {
-	int		x;
-	int		y;
+	t_point	pos;
 	int		frame;
-	void	*mlx;
-	void	*win;
-	void	*data;
 	t_img	img;
 
 	frame = game->hero.frame;
-	x = game->hero.pos.x;
-	y = game->hero.pos.y;
+	pos = make_point(game->hero.pos.x, game->hero.pos.y);
 	img = game->hero.face[frame];
-	win = game->win;
-	mlx = game->mlx;
-	put_img_to_game(game, img, x, y);
+	put_img_to_game(game, img, pos.x, pos.y);
 }
 
 void	draw_collectable(t_data *game)
 {
 	t_img	img;
-	void	*mlx;
-	void	*win;
 	int		x;
 	int		y;
 	int		i;
 
-	win = game->win;
-	mlx = game->mlx;
 	i = -1;
 	while (++i < game->items_nb)
 	{
@@ -89,13 +74,10 @@ void	draw_map(t_data *game)
 {
 	t_img	wa;
 	t_img	gr;
-	void	*win;
-	void	*mlx;
 	int		def;
-	int		i, j;
+	int		i;
+	int		j;
 
-	mlx = game->mlx;
-	win = game->win;
 	wa = game->map.wall;
 	gr = game->map.ground;
 	def = game->map.def;

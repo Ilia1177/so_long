@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:08 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 13:17:48 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 14:55:37 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 void	put_pixel_img(t_data *game, int x, int y, int color)
 {

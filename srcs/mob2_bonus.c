@@ -6,18 +6,17 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:43:05 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/05 16:18:33 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 15:13:19 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../include/so_long.h"
 
 void	draw_mob(t_data *game)
 {
 	t_movable	*move;
 
 	move = game->mob;
-
 	while (move)
 	{
 		put_img_to_game(game, move->face[0], move->pos.x, move->pos.y);
@@ -27,11 +26,11 @@ void	draw_mob(t_data *game)
 
 int	valid_objectpos(t_data *game, t_movable *obj, t_point pos)
 {
-	int i1;
-	int	j1;
-	int i2;
-	int j2;
-	char **map;
+	int		i1;
+	int		j1;
+	int		i2;
+	int		j2;
+	char	**map;
 
 	map = game->map.soil;
 	i1 = pos.x / game->map.def;
@@ -42,7 +41,7 @@ int	valid_objectpos(t_data *game, t_movable *obj, t_point pos)
 		return (0);
 	if (pos.x < 0 || pos.y < 0)
 		return (0);
-	if (map[j1][i1] == '1' || map[j1][i2] == '1' 
+	if (map[j1][i1] == '1' || map[j1][i2] == '1'
 		|| map[j2][i1] == '1' || map[j2][i2] == '1')
 		return (0);
 	else if (map[j1][i1] && map[j1][i2] && map[j2][i1] && map[j2][i2])
@@ -67,7 +66,7 @@ void	move_mob(t_data *game)
 			mob->vel.x *= -1;
 		if (valid_objectpos(game, mob, new_pos_y))
 			mob->pos.y = new_pos_y.y;
-		else 
+		else
 			mob->vel.y *= -1;
 		mob = mob->next;
 	}
