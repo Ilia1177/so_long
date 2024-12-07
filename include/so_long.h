@@ -6,7 +6,7 @@
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:13:10 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 16:38:19 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 17:00:33 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,6 @@ void			check_items(t_data *game);
 int				count_object(t_data *game, int object);
 int				items_exist(t_data *game);
 
-
-//unsigned int	display_moves(void);
 //	cleaning.c //
 int				free_all(char **object, int i); //
 int				close_window(t_data *data);
