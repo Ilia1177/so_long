@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:50:08 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 16:52:26 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 17:01:46 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	check_map(t_data *game)
 
 void	check_items(t_data *game)
 {
-	int	i;
-	int	x;
-	int	y;
-	char *warning;
+	int		i;
+	int		x;
+	int		y;
+	char	*warning;
 
 	x = game->exit.pos.x - 50;
 	y = game->exit.pos.y + 25;
