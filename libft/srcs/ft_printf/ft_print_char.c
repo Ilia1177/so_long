@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 20:06:31 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:40:30 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:43:32 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/libft.h"
 
 int	ft_print_char(int c)
 {

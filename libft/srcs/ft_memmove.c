@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 11:00:57 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:34:52 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:42:20 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/libft.h"
+#include "../include/libft.h"
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {

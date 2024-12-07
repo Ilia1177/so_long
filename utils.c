@@ -6,16 +6,16 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:53:41 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 11:06:26 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:26:29 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	refresh(t_data *game)
+/*void	refresh(t_data *game)
 {
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
-}
+}*/
 
 t_point	make_point(int x, int y)
 {

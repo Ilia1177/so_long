@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:02:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:32:38 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:35:53 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/libft.h"
+#include "../include/libft.h"
 
 static char	*num_to_str(long int num, int len, int sign)
 {

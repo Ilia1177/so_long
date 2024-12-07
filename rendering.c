@@ -6,12 +6,16 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 11:11:40 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:26:52 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	refresh(t_data *game)
+{
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+}
 int	render(void *data)
 {
 	static int count;

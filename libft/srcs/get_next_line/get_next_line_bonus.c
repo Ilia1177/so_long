@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:28:44 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/06 16:32:23 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 13:41:47 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/get_next_line_bonus.h"
+#include "../../include/get_next_line_bonus.h"
 
 static char	*make_paragraph(char *paragraph, char *current_line);
 static char	*get_characters(int fd, char *paragraph, char *buffer);

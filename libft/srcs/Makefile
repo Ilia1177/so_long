@@ -6,7 +6,7 @@
 #    By: npolack <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/26 10:27:51 by npolack           #+#    #+#              #
-#    Updated: 2024/11/19 09:33:50 by npolack          ###   ########.fr        #
+#    Updated: 2024/12/07 13:48:42 by npolack          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,15 +62,17 @@ SRCS	=	ft_isspace.c	\
 BONUS_SRCS := $(addsuffix _bonus.c, $(BONUS_SRCS))
 BONUS_SRCS := $(addprefix ft_, $(BONUS_SRCS))
 
-OBJS		=	$(SRCS:.c=.o)
+OBJS_DIR	= objs
 
-B_OBJS		=	$(BONUS_SRCS:.c=.o)
+OBJS		=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
+
+B_OBJS		=	$(BONUS_SRCS:%.c=$(OBJS_DIR)/%.o)
 
 AR 			=	ar -rcs
 
 CC			=	cc 
 
-CFLAGS		=	-Wall -Wextra -Werror -g
+CFLAGS		=	-Wall -Wextra -Werror
 
 RM			=	rm -f
 
@@ -79,11 +81,13 @@ all				:	$(NAME)
 $(NAME)			:	$(OBJS) $(B_OBJS)
 					$(AR) $(NAME) $^ 
 
-.c.o	 		:
+$(OBJS_DIR)/%.o	: %.c
+	@mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean	:	
 			$(RM) $(OBJS) $(B_OBJS)
+			rm -rf $(OBJS_DIR)
 
 fclean	:	clean
 			$(RM) $(NAME)

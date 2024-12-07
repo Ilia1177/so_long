@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:35:08 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:34:52 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:42:20 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/libft.h"
+#include "../include/libft.h"
 
 void	*ft_memset(void *s, int c, size_t n)
 {

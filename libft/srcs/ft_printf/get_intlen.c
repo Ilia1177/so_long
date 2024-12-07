@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 10:57:34 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:40:30 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:44:14 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/libft.h"
 
 int	get_intlen(long long n, int baselen)
 {

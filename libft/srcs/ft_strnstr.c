@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 18:26:29 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:36:58 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:42:21 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/libft.h"
+#include "../include/libft.h"
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {

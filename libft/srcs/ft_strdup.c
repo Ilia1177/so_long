@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:01:55 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:35:16 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:42:21 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/libft.h"
+#include "../include/libft.h"
 
 char	*ft_strdup(const char *s)
 {

@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:52:17 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:40:30 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:43:19 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/libft.h"
 
 static void	ft_put_address(unsigned long num, char *base)
 {

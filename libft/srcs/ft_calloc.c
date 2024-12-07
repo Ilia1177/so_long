@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 13:26:50 by npolack           #+#    #+#             */
-/*   Updated: 2024/10/30 12:32:38 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/07 12:34:53 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/libft.h"
+#include "../include/libft.h"
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
