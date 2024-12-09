@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 12:12:03 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:25:17 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	init_collectable(t_data *game)
 	game->item = (t_item *)malloc(sizeof(t_item) * game->items_nb);
 	if (!game->item)
 		return (0);
-	k = 0;
+	k = -1;
 	j = -1;
 	while (++j < game->map.h)
 	{
@@ -54,10 +54,10 @@ int	init_collectable(t_data *game)
 		{
 			if (game->map.soil[j][i] == 'C')
 			{
-				game->item[k].exist = 1;
+				game->item[++k].exist = 1;
 				game->item[k].pos.x = i * game->map.def;
 				game->item[k].pos.y = j * game->map.def;
-				k++;
+				game->item[k].img.img = NULL;
 			}
 		}
 	}
@@ -79,6 +79,7 @@ int	init_exit(t_data *game)
 			{
 				game->exit.pos.x = i * game->map.def;
 				game->exit.pos.y = j * game->map.def;
+				game->exit.img.img = NULL;
 				break ;
 			}
 		}
@@ -126,10 +127,16 @@ int	game_init(t_data *game, char *path, int def)
 		return (0);
 	if (!init_win(game))
 		return (0);
+
+	if (!init_mob(game))
+		return (free_win_n_display(game));
+	if (!load_images(game))
+	{
+		free_mob(game, &game->mob);
+		return (close_window(game));
+	}
 	if (!init_game_img(game))
 		return (0);
-	if (!init_mob(game) || !load_images(game))
-		return (close_window(game));
 	i = -1;
 	while (++i < 99999)
 		game->key_states[i] = 0;

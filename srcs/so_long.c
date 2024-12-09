@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:52 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 16:10:07 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:26:57 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int ac, char **av)
 	t_data	game;
 
 	game.counter.moves = 0;
+	init_to_zero(&game);
 	if (ac != 2)
 		return (0);
 	if (!check_path(av[1]))

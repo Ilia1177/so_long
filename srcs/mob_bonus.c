@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 18:01:42 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 16:14:48 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	init_mob(t_data *game)
 				new->width = 20;
 				new->face[0] = new_file_img("textures/mob.xpm", game);
 				if (!new->face[0].img)
-					return (0);
+					return (free_mob(game, &game->mob));
 				ft_mobadd_back(&game->mob, new);
 			}
 		}

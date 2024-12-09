@@ -22,6 +22,7 @@ SRCS = 	anim.c\
 		load_image.c\
 		check.c\
 		cleaning.c\
+		cleaning2.c\
 		so_long.c\
 		rendering.c\
 		initialisation.c\

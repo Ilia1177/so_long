@@ -6,7 +6,7 @@
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:13:10 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 13:21:27 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:26:31 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,11 @@ void			check_items(t_data *game);
 int				count_object(t_data *game, int object);
 int				items_exist(t_data *game);
 
+//	cleaning2.c
+
+int	free_win_n_display(t_data *game);
+int	free_image(t_data *game, t_img *img, int i);
+int	init_to_zero(t_data *data);
 //	cleaning.c //
 int				free_all(char **object, int i); //
 int				close_window(t_data *data);
@@ -187,4 +192,5 @@ void			draw_mob(t_data *game);
 int				valid_objectpos(t_data *game, t_movable *obj, t_point pos);
 void			move_mob(t_data *game);
 int				ft_random(int min, int max);
+
 #endif
