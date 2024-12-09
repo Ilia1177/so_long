@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnlen.c                                       :+:      :+:    :+:   */
+/*   anim.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 09:31:24 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 12:20:27 by npolack          ###   ########.fr       */
+/*   Created: 2024/12/09 13:26:25 by npolack           #+#    #+#             */
+/*   Updated: 2024/12/09 13:29:52 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strnlen(char *str, int stop)
-{
-	char	*strt;
+#include "../include/so_long.h"
 
-	strt = str;
-	while (*str != stop && *str)
-		str++;
-	return (str - strt);
+void	anim(t_movable *perso)
+{
+	static int	delay;
+
+	if (delay > ANIM_DELAY)
+	{
+		perso->frame = (perso->frame + 1) % 4;
+		delay = 0;
+	}
+	delay++;
 }

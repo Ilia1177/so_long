@@ -6,7 +6,7 @@
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:13:10 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 17:00:33 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 13:21:27 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <math.h>
 # include <stdio.h>
 
+# define ANIM_DELAY 2
 # define SPEED_MOB	5
 # define SPEED_PLA	0
 
@@ -144,6 +145,11 @@ void			draw_hero(t_data *game);
 void			draw_collectable(t_data *game);
 void			draw_map(t_data *game);
 
+//	initialisation2.c
+int				init_mlx(t_data *game);
+int				init_win(t_data *game);
+int				init_game_img(t_data *game);
+
 //	initialisation
 int				init_hero(t_data *game);
 int				init_map(t_data *game, char *path, int def);
@@ -157,6 +163,7 @@ int				load_items_images(t_data *game);
 int				moves_on_screen(t_data *game);
 
 //	input //
+void			anim(t_movable *perso);
 int				handle_input(t_data *data);
 void			move_up(t_data *game);
 void			move_down(t_data *game);

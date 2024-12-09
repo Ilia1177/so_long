@@ -6,11 +6,11 @@
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 12:35:20 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 12:35:29 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 12:19:43 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	if ((c > 9 && c < 13) || c == ' ')
 		return (1);

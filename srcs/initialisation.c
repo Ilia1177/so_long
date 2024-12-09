@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 14:53:03 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 12:12:03 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,17 +122,14 @@ int	game_init(t_data *game, char *path, int def)
 	}
 	game->height = game->map.h * game->map.def;
 	game->width = game->map.w * game->map.def;
-	game->mlx = mlx_init();
-	if (!game->mlx)
+	if (!init_mlx(game))
 		return (0);
-	game->win = mlx_new_window(game->mlx, game->width, game->height, "HZD$");
-	if (!game->win)
+	if (!init_win(game))
 		return (0);
-	game->img = new_img(game->width, game->height, game);
-	if (!game->img.img)
+	if (!init_game_img(game))
 		return (0);
-	if (!init_mob(game) ||!load_images(game))
-		return (0);
+	if (!init_mob(game) || !load_images(game))
+		return (close_window(game));
 	i = -1;
 	while (++i < 99999)
 		game->key_states[i] = 0;

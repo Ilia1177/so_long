@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:17:17 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 14:53:16 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 13:18:39 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	load_images(t_data *game)
 	game->exit.img = new_file_img("./textures/exit.xpm", game);
 	if (!game->exit.img.img)
 		return (0);
-	game->hero.face[0] = new_file_img("./textures/sprite1.xpm", game);
-	game->hero.face[1] = new_file_img("./textures/sprite2.xpm", game);
-	game->hero.face[2] = new_file_img("./textures/sprite3.xpm", game);
-	game->hero.face[3] = new_file_img("./textures/sprite4.xpm", game);
+	game->hero.face[0] = new_file_img("./textures/h1.xpm", game);
+	game->hero.face[1] = new_file_img("./textures/h2.xpm", game);
+	game->hero.face[2] = new_file_img("./textures/h3.xpm", game);
+	game->hero.face[3] = new_file_img("./textures/h4.xpm", game);
 	if (!game->hero.face[0].img || !game->hero.face[1].img
 		|| !game->hero.face[2].img || !game->hero.face[3].img)
 		return (0);

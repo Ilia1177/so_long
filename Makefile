@@ -16,21 +16,23 @@ endif
 
 LIBFT = libft/bin/libft.a
 
-SRCS = utils.c\
-	   load_image.c\
-	   check.c\
-	   cleaning.c\
-	   so_long.c\
-	   rendering.c\
-	   initialisation.c\
-	   input.c\
-	   image_utils.c\
-	   map.c\
-	   flood_map.c\
-	   mob_bonus.c\
-	   mob2_bonus.c\
-	   utils_bonus.c\
-	   counter_bonus.c\
+SRCS = 	anim.c\
+		initialisation2.c\
+		utils.c\
+		load_image.c\
+		check.c\
+		cleaning.c\
+		so_long.c\
+		rendering.c\
+		initialisation.c\
+		input.c\
+		image_utils.c\
+		map.c\
+		flood_map.c\
+		mob_bonus.c\
+		mob2_bonus.c\
+		utils_bonus.c\
+		counter_bonus.c\
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 

@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 14:53:09 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 13:30:47 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	move_down(t_data *game)
 	int	x;
 	int	y;
 
-	game->hero.frame = (game->hero.frame + 1) % 4;
+	anim(&game->hero);
 	x = game->hero.pos.x;
 	y = game->hero.pos.y + game->hero.height + 1;
 	if (!check_pos(game, x, y))
@@ -59,7 +59,7 @@ void	move_up(t_data *game)
 	int	x;
 	int	y;
 
-	game->hero.frame = (game->hero.frame + 1) % 4;
+	anim(&game->hero);
 	x = game->hero.pos.x;
 	y = game->hero.pos.y - 1;
 	if (!check_pos(game, x, y))
@@ -79,7 +79,7 @@ void	move_right(t_data *game)
 	int	x;
 	int	y;
 
-	game->hero.frame = (game->hero.frame + 1) % 4;
+	anim(&game->hero);
 	x = game->hero.pos.x + game->hero.width + 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))
@@ -99,7 +99,7 @@ void	move_left(t_data *game)
 	int	x;
 	int	y;
 
-	game->hero.frame = (game->hero.frame + 1) % 4;
+	anim(&game->hero);
 	x = game->hero.pos.x - 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))
