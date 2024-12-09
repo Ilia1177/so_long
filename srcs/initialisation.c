@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 17:25:17 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 22:28:21 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	game_init(t_data *game, char *path, int def)
 {
 	int	i;
 
+	init_to_zero(game);
 	if (!init_map(game, path, def))
 	{
 		ft_printf("Error\nMap is invalid!\n");
@@ -123,20 +124,19 @@ int	game_init(t_data *game, char *path, int def)
 	}
 	game->height = game->map.h * game->map.def;
 	game->width = game->map.w * game->map.def;
-	if (!init_mlx(game))
-		return (0);
-	if (!init_win(game))
-		return (0);
-
-	if (!init_mob(game))
-		return (free_win_n_display(game));
-	if (!load_images(game))
-	{
-		free_mob(game, &game->mob);
+	game->mlx = mlx_init();
+	if (!game->mlx)
 		return (close_window(game));
-	}
-	if (!init_game_img(game))
-		return (0);
+	game->win = mlx_new_window(game->mlx, game->width, game->height, "HZD$");
+	if (!game->win)
+		return (close_window(game));
+	if (!init_mob(game))
+		return (close_window(game));
+	if (!load_images(game))
+		return (close_window(game));
+	game->img = new_img(game->width, game->height, game);
+	if (!game->img.img)
+		return (close_window(game));
 	i = -1;
 	while (++i < 99999)
 		game->key_states[i] = 0;

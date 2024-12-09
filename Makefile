@@ -39,7 +39,7 @@ SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -O0
 CC = cc
 
 all : $(MLX_LIB) $(NAME) $(LIBFT)

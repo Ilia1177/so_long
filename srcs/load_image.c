@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:17:17 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 17:26:03 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 22:05:25 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	load_items_images(t_data *game)
 		game->item[i].img = new_file_img("./textures/item.xpm", game);
 		if (!game->item[i].img.img)
 		{
-			while (--i)
-				mlx_destroy_image(game->mlx, game->item[i].img.img);
+		//	while (--i)
+		//		mlx_destroy_image(game->mlx, game->item[i].img.img);
 			return (0);
 		}
 	}
@@ -58,11 +58,11 @@ int	load_images(t_data *game)
 	if (!load_counter_images(game))
 		return (0);
 	if (!load_items_images(game))
-		return (free_image(game, game->counter.num, 10));
+		return (0);
 	game->exit.img = new_file_img("./textures/exit.xpm", game);
 	if (!game->exit.img.img)
 	{
-		free_image(game, game->counter.num, 10);
+		//free_image(game, game->counter.num, 10);
 		return (0);
 	}
 	game->hero.face[0] = new_file_img("./textures/h1.xpm", game);

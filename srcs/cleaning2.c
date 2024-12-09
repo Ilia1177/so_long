@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:20:33 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 17:24:27 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/09 22:11:09 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ int	init_to_zero(t_data *data)
 	data->map.ground.img = NULL;
 	data->map.wall.img = NULL;
 	data->exit.img.img = NULL;
-	i = -1;
-	while (++i < 4)
-		data->hero.face[i].img = NULL;
 	data->img.img = NULL;
 	data->mlx = NULL;
 	data->win = NULL;
+	return (1);
 }
