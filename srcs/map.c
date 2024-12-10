@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:18 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 15:08:59 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:07:43 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,6 @@ int	fill_soil(t_map *map)
 
 int	make_soil(t_map *map, char *map_name)
 {
-	char	*mapline;
-	int		i;
-	int		j;
 	char	*path;
 
 	path = ft_strjoin("./maps/", map_name);

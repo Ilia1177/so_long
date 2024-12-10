@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:11:35 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 16:07:55 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:08:05 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_point	multiply_point(t_point a, int x)
 int	ft_random(int min, int max)
 {
 	int				fd;
-	int				i;
 	int				n;
 	int				range;
 	unsigned int	random_value;

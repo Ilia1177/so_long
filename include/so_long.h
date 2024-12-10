@@ -6,7 +6,7 @@
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:13:10 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 13:19:02 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:07:16 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ int				init_game_img(t_data *game);
 //	initialisation
 int				init_hero(t_data *game);
 int				init_map(t_data *game, char *path, int def);
-int				game_init(t_data *game, char *path, int def);
+int				game_init(t_data *game);
 int				init_collectable(t_data *game);
 int				init_exit(t_data *game);
 

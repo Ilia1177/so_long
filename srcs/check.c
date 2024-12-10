@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:50:08 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 16:14:54 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:05:41 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	count_object(t_data *game, int object)
 
 int	check_map(t_data *game)
 {
-	int	j;
 	int	x;
 	int	y;
 	int	correct;

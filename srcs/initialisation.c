@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 16:23:40 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 18:06:31 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	init_hero(t_data *game)
 	return (1);
 }
 
-int	game_init(t_data *game, char *path, int def)
+int	game_init(t_data *game)
 {
 	game->height = game->map.h * game->map.def;
 	game->width = game->map.w * game->map.def;
