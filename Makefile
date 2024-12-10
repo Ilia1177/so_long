@@ -39,7 +39,8 @@ SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
 
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
-CFLAGS = -Wall -Wextra -Werror -g -O0
+CFLAGS = -Wall -Wextra -Werror
+
 CC = cc
 
 all : $(MLX_LIB) $(NAME) $(LIBFT)
@@ -48,7 +49,7 @@ $(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
 	$(CC) $^ $(MLX_FLAGS) -o $(NAME) -L./libft/bin -lft
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
-	mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)
 	$(CC) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES) -g -O0
 
 $(MLX_LIB): $(CLONE) 
