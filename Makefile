@@ -45,11 +45,11 @@ CC = cc
 all : $(MLX_LIB) $(NAME) $(LIBFT)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
-	$(CC) $^ $(MLX_FLAGS) -o $(NAME) 
+	$(CC) $^ $(MLX_FLAGS) -o $(NAME) -L./libft/bin -lft
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	mkdir -p $(OBJS_DIR)
-	$(CC) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES)
+	$(CC) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES) -g
 
 $(MLX_LIB): $(CLONE) 
 		make -C $(MLX_DIR)

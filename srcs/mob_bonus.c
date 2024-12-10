@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 16:14:48 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 11:21:16 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	free_mob(t_data *game, t_movable **mob)
 	while (*mob)
 	{
 		tmp = (*mob)->next;
-		mlx_destroy_image(game->mlx, (*mob)->face[0].img);
+		if ((*mob)->face[0].img)
+			mlx_destroy_image(game->mlx, (*mob)->face[0].img);
 		free(*mob);
 		*mob = tmp;
 	}
@@ -72,9 +73,9 @@ int	init_mob(t_data *game)
 				new->height = 20;
 				new->width = 20;
 				new->face[0] = new_file_img("textures/mob.xpm", game);
+				ft_mobadd_back(&game->mob, new);
 				if (!new->face[0].img)
 					return (free_mob(game, &game->mob));
-				ft_mobadd_back(&game->mob, new);
 			}
 		}
 	}

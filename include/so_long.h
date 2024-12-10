@@ -6,7 +6,7 @@
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:13:10 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/09 17:26:31 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 13:19:02 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,12 @@ int				items_exist(t_data *game);
 
 //	cleaning2.c
 
-int	free_win_n_display(t_data *game);
-int	free_image(t_data *game, t_img *img, int i);
-int	init_to_zero(t_data *data);
+int				clean_all(t_data *data);
+int				free_image(t_data *game, t_img *img, int i);
+int				init_to_zero(t_data *data);
+int				free_all_images(t_data *game);
+int				destroy_items(t_data *game);
+
 //	cleaning.c //
 int				free_all(char **object, int i); //
 int				close_window(t_data *data);
@@ -163,6 +166,8 @@ int				init_collectable(t_data *game);
 int				init_exit(t_data *game);
 
 //	load_image
+int				load_map_images(t_data *game);
+int				load_hero_images(t_data *game);
 int				load_images(t_data *game);
 int				load_items_images(t_data *game);
 int				moves_on_screen(t_data *game);
