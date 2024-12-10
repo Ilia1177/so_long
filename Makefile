@@ -50,7 +50,7 @@ $(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
-	$(CC) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES) -g -O0
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES)
 
 $(MLX_LIB): $(CLONE) 
 		make -C $(MLX_DIR)
