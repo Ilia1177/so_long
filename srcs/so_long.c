@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:52 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 15:52:54 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:34:29 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int ac, char **av)
 	ready = init_map(&game, av[1], 50);
 	if (ready == -1)
 	{
-		ft_printf("Error\nMap is invalid!");
+		ft_printf("Error\nMap is invalid!\n");
 		return (0);
 	}
 	else if (ready == 1)
