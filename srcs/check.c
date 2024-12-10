@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:50:08 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 17:01:46 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:14:54 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,11 @@ int	check_map(t_data *game)
 		return (0);
 	flood_map(game, x, y);
 	if (!map_cmp(game) || game->map.h < 3 || game->map.w < 3)
-	{
-		ft_printf("Error\nImpossible map !\n");
-		correct = 0;
-	}
+		correct = -1;
 	if (game->map.h > 20 || game->map.w > 20)
-	{
-		ft_printf("Error\nMap is too big !\n");
-		correct = 0;
-	}
+		correct = -1;
+	if (count_object(game, 'E') != 1 || count_object(game, 'P') != 1)
+		correct = -1;
 	free_all(game->flooded_map.soil, game->flooded_map.h);
 	return (correct);
 }

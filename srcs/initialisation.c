@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 13:02:19 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:23:40 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,27 @@
 
 int	init_map(t_data *game, char *path, int def)
 {
+	int	ready;
+
 	game->map.def = def;
 	if (!measure_map(&game->map, path))
-		return (0);
+		return (-1);
 	if (!make_soil(&game->map, path))
 		return (0);
 	game->items_nb = count_object(game, 'C');
 	if (game->items_nb < 1)
+	{
+		free_all(game->map.soil, game->map.h);
+		return (-1);
+	}
+	if (!init_collectable(game) || !init_hero(game) || !init_exit(game))
 		return (free_all(game->map.soil, game->map.h));
-	if (count_object(game, 'E') != 1 || count_object(game, 'P') != 1)
-		return (free_all(game->map.soil, game->map.h));
-	init_hero(game);
-	init_exit(game);
-	if (!init_collectable(game))
-		return (free_all(game->map.soil, game->map.h));
-	if (!check_map(game))
+	ready = check_map(game);
+	if (ready < 0)
 	{
 		free(game->item);
-		return (free_all(game->map.soil, game->map.h));
+		free_all(game->map.soil, game->map.h);
+		return (ready);
 	}
 	return (1);
 }
@@ -114,13 +117,6 @@ int	init_hero(t_data *game)
 
 int	game_init(t_data *game, char *path, int def)
 {
-	int	i;
-
-	if (!init_map(game, path, def))
-	{
-		ft_printf("Error\nMap is invalid!\n");
-		return (0);
-	}
 	game->height = game->map.h * game->map.def;
 	game->width = game->map.w * game->map.def;
 	if (!init_mlx(game))
@@ -134,8 +130,5 @@ int	game_init(t_data *game, char *path, int def)
 	game->img = new_img(game->width, game->height, game);
 	if (!game->img.img)
 		return (clean_all(game));
-	i = -1;
-	while (++i < 99999)
-		game->key_states[i] = 0;
 	return (1);
 }
