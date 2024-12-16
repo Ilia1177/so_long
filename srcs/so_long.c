@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:52 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/16 12:46:46 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:51:04 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_path(char *path)
 	len = ft_strlen(path);
 	if (len < 5 || ft_strcmp(path + (len - 4), ".ber"))
 	{
-		ft_printf("Map should be in '.ber' format!\n");
+		ft_printf("Error\nMap should be in '.ber' format!\n");
 		return (0);
 	}
 	return (1);

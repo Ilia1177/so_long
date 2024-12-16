@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:08 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 14:55:37 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/16 13:02:13 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ t_img	new_file_img(char *path, t_data *game)
 	t_img	i;
 
 	i.img = mlx_xpm_file_to_image(game->mlx, path, &i.w, &i.h);
-	if (!i.img)
-		perror("new file img");
-	else
+	if (i.img)
 		i.addr = mlx_get_data_addr(i.img, &i.bpp, &i.line_l, &i.endian);
 	return (i);
 }
