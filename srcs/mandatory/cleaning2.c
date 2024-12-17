@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:20:33 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 15:41:39 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 14:11:11 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,10 @@ int	init_to_zero(t_data *data)
 {
 	int	i;
 
-	data->counter.moves = 0;
+	data->count = 0;
 	i = -1;
 	while (++i < 4)
 		data->hero.face[i].img = NULL;
-	i = -1;
-	while (++i < 10)
-		data->counter.num[i].img = NULL;
 	data->item = NULL;
 	data->map.ground.img = NULL;
 	data->map.wall.img = NULL;
@@ -69,7 +66,6 @@ int	destroy_items(t_data *game)
 
 int	free_all_images(t_data *game)
 {
-	free_image(game, game->counter.num, 10);
 	destroy_items(game);
 	free_image(game, game->hero.face, 4);
 	if (game->map.ground.img)
@@ -86,7 +82,6 @@ int	free_all_images(t_data *game)
 int	clean_all(t_data *data)
 {
 	free_all_images(data);
-	free_mob(data, &data->mob);
 	free_all(data->map.soil, data->map.h);
 	mlx_clear_window(data->mlx, data->win);
 	mlx_destroy_window(data->mlx, data->win);

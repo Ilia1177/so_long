@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 12:19:56 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 16:04:45 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 14:00:09 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,13 @@
 
 int	render(void *data)
 {
-	static int	count;
-
 	check_items(data);
-	check_mob(data);
 	draw_map(data);
-	moves_on_screen(data);
 	handle_input(data);
 	draw_collectable(data);
 	draw_exit(data);
 	draw_hero(data);
-	if (count > SPEED_MOB)
-	{
-		move_mob(data);
-		count = 0;
-	}
-	draw_mob(data);
 	refresh(data);
-	count++;
 	return (0);
 }
 

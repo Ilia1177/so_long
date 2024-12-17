@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisation.c                                   :+:      :+:    :+:   */
+/*   initialisation_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:15:49 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 18:06:31 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:54:31 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include/so_long_bonus.h"
 
 int	init_map(t_data *game, char *path, int def)
 {

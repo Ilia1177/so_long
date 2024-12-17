@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:50:48 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/17 10:04:11 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 12:56:10 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include/so_long_bonus.h"
 
 int	free_mob(t_data *game, t_movable **mob)
 {

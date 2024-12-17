@@ -1,4 +1,6 @@
 NAME = so_long
+B_NAME = so_long_bonus
+
 UNAME = $(shell uname)
 SRCS_DIR = srcs
 OBJS_DIR = objs
@@ -8,16 +10,15 @@ CLONE = mlx
 
 ifeq ($(shell uname), Linux)
 	INCLUDES = -I/usr/include -Imlx
-	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib -lXext -lX11 -lm -lz
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/lib -lXext -lX11 -lm 
 else
 	INCLUDES = -I/opt/X11/include -Imlx
-	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -lm -lz -framework OpenGL -framework AppKit
+	MLX_FLAGS = -Lmlx -lmlx -L/usr/X11/lib -lXext -lX11 -lm -framework OpenGL -framework AppKit
 endif
 
 LIBFT = libft/bin/libft.a
 
-SRCS = 	anim.c\
-		initialisation2.c\
+SRCS = 	initialisation2.c\
 		utils.c\
 		load_image.c\
 		check.c\
@@ -29,27 +30,54 @@ SRCS = 	anim.c\
 		input.c\
 		image_utils.c\
 		map.c\
-		flood_map.c\
-		mob_bonus.c\
-		mob2_bonus.c\
-		utils_bonus.c\
-		counter_bonus.c\
+		flood_map.c
 
-SRCS := $(addprefix $(SRCS_DIR)/, $(SRCS))
+B_SRCS =	anim_bonus.c\
+			mob_bonus.c\
+			mob2_bonus.c\
+			utils_bonus.c\
+			counter_bonus.c\
+			rendering_bonus.c\
+			initialisation2_bonus.c\
+			utils2_bonus.c\
+			load_image_bonus.c\
+			check_bonus.c\
+			cleaning2_bonus.c\
+			cleaning_bonus.c\
+			so_long_bonus.c\
+			initialisation_bonus.c\
+			input_bonus.c\
+			image_utils_bonus.c\
+			map_bonus.c\
+			flood_map_bonus.c
 
-OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+
+SRCS := $(addprefix $(SRCS_DIR)/mandatory/, $(SRCS))
+B_SRCS := $(addprefix $(SRCS_DIR)/bonus/, $(B_SRCS))
+
+OBJS = $(SRCS:$(SRCS_DIR)/mandatory/%.c=$(OBJS_DIR)/mandatory/%.o)
+B_OBJS = $(B_SRCS:$(SRCS_DIR)/bonus/%.c=$(OBJS_DIR)/bonus/%.o)
 
 CFLAGS = -Wall -Wextra -Werror
 
 CC = cc
 
-all : $(MLX_LIB) $(NAME) $(LIBFT)
+all :  $(LIBFT) $(MLX_LIB) $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
+bonus : $(LIBFT) $(MLX_LIB) $(B_NAME)
+
+$(NAME): $(OBJS)
 	$(CC) $^ $(MLX_FLAGS) -o $(NAME) -L./libft/bin -lft
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
-	@mkdir -p $(OBJS_DIR)
+$(B_NAME): $(B_OBJS)
+	$(CC) $^ $(MLX_FLAGS) -o $(B_NAME) -L./libft/bin -lft
+
+$(OBJS_DIR)/mandatory/%.o: $(SRCS_DIR)/mandatory/%.c
+	mkdir -p $(OBJS_DIR)/mandatory
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES)
+
+$(OBJS_DIR)/bonus/%.o: $(SRCS_DIR)/bonus/%.c
+	mkdir -p $(OBJS_DIR)/bonus
 	$(CC) $(CFLAGS) -c $< -o $@ -I$(MLX_DIR) $(INCLUDES)
 
 $(MLX_LIB): $(CLONE) 
@@ -62,15 +90,17 @@ $(LIBFT) :
 	make -C libft
 
 clean	:
-	make clean -C libft
-	make clean -C $(MLX_DIR)
-	rm -fr $(OBJS_DIR)
+	-make clean -C libft
+	-make clean -C $(MLX_DIR)
+	-rm -fr $(OBJS_DIR)
+	-rm -fr $(B_OBJS_DIR)
 
 fclean	: clean
-	make fclean -C libft
+	-make fclean -C libft
 	rm -fr $(MLX_DIR)
-	rm $(NAME)
+	-rm $(NAME)
+	-rm $(B_NAME)
 
 re		: fclean all
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re bonus

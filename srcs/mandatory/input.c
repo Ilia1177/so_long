@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:08:27 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/17 06:30:14 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 14:09:14 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	move_down(t_data *game)
 	int	x;
 	int	y;
 
-	anim(&game->hero);
+	game->hero.frame = 0;
 	x = game->hero.pos.x;
 	y = game->hero.pos.y + game->hero.height + 1;
 	if (!check_pos(game, x, y))
@@ -49,8 +49,8 @@ void	move_down(t_data *game)
 	else
 	{
 		game->hero.pos.y += 1;
-		game->counter.moves++;
-		ft_printf("%d\n", game->counter.moves);
+		game->count++;
+		ft_printf("%d\n", game->count);
 	}
 }
 
@@ -59,7 +59,7 @@ void	move_up(t_data *game)
 	int	x;
 	int	y;
 
-	anim(&game->hero);
+	game->hero.frame = 0;
 	x = game->hero.pos.x;
 	y = game->hero.pos.y - 1;
 	if (!check_pos(game, x, y))
@@ -69,8 +69,8 @@ void	move_up(t_data *game)
 	else
 	{
 		game->hero.pos.y -= 1;
-		game->counter.moves++;
-		ft_printf("%d\n", game->counter.moves);
+		game->count++;
+		ft_printf("%d\n", game->count);
 	}
 }
 
@@ -79,7 +79,7 @@ void	move_right(t_data *game)
 	int	x;
 	int	y;
 
-	anim(&game->hero);
+	game->hero.frame = 0;
 	x = game->hero.pos.x + game->hero.width + 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))
@@ -89,8 +89,8 @@ void	move_right(t_data *game)
 	else
 	{
 		game->hero.pos.x += 1;
-		game->counter.moves++;
-		ft_printf("%d\n", game->counter.moves);
+		game->count++;
+		ft_printf("%d\n", game->count);
 	}
 }
 
@@ -99,7 +99,7 @@ void	move_left(t_data *game)
 	int	x;
 	int	y;
 
-	anim(&game->hero);
+	game->hero.frame = 0;
 	x = game->hero.pos.x - 1;
 	y = game->hero.pos.y;
 	if (!check_pos(game, x, y))
@@ -109,7 +109,7 @@ void	move_left(t_data *game)
 	else
 	{
 		game->hero.pos.x -= 1;
-		game->counter.moves++;
-		ft_printf("%d\n", game->counter.moves);
+		game->count++;
+		ft_printf("%d\n", game->count);
 	}
 }

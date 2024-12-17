@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:13:10 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/17 14:07:38 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 13:52:03 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <mlx.h>
 # include <X11/keysym.h>
@@ -22,6 +22,8 @@
 # include <math.h>
 # include <stdio.h>
 
+# define ANIM_DELAY 2
+# define SPEED_MOB	5
 # define SPEED_PLA	0
 
 typedef struct s_img
@@ -34,6 +36,12 @@ typedef struct s_img
 	int		w;
 	int		h;
 }	t_img;
+
+typedef struct s_count
+{
+	t_img	num[10];
+	int		moves;
+}	t_count;
 
 typedef struct s_point
 {
@@ -74,7 +82,7 @@ typedef struct s_map
 
 typedef struct s_data
 {
-	int			count;
+	t_count		counter;
 	t_item		exit;
 	t_item		*item;
 	t_movable	hero;
@@ -134,6 +142,7 @@ int				destroy_items(t_data *game);
 int				free_all(char **object, int i); //
 int				close_window(t_data *data);
 int				free_line(char *line);
+void			destroy_counter(t_data *game);
 
 //	rendering.c	//
 int				render(void *data);
@@ -159,12 +168,33 @@ int				load_map_images(t_data *game);
 int				load_hero_images(t_data *game);
 int				load_images(t_data *game);
 int				load_items_images(t_data *game);
+int				moves_on_screen(t_data *game);
+int				load_counter_images(t_data *game);
 
 //	input //
+void			anim(t_movable *perso);
 int				handle_input(t_data *data);
 void			move_up(t_data *game);
 void			move_down(t_data *game);
 void			move_right(t_data *game);
 void			move_left(t_data *game);
+
+//	utils_bonus //
+t_point			add_point(t_point a, t_point b);
+int				ft_random(int min, int max);
+t_point			multiply_point(t_point a, int x);
+
+//	mob_bonus //
+int				free_mob(t_data *game, t_movable **mob);
+int				check_mob(t_data *game);
+int				init_mob(t_data *game);
+void			ft_mobadd_back(t_movable **lst, t_movable *new);
+t_movable		*mk_mob(t_point pos);
+
+//	mob2_bonus
+void			draw_mob(t_data *game);
+int				valid_objectpos(t_data *game, t_movable *obj, t_point pos);
+void			move_mob(t_data *game);
+int				ft_random(int min, int max);
 
 #endif

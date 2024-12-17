@@ -6,11 +6,11 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:43:05 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/07 15:13:19 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 13:52:39 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/so_long.h"
+#include "../include/so_long_bonus.h"
 
 void	draw_mob(t_data *game)
 {
@@ -70,4 +70,27 @@ void	move_mob(t_data *game)
 			mob->vel.y *= -1;
 		mob = mob->next;
 	}
+}
+
+int	load_counter_images(t_data *game)
+{
+	int	i;
+
+	game->counter.num[0] = new_file_img("./textures/num/0.xpm", game);
+	game->counter.num[1] = new_file_img("./textures/num/1.xpm", game);
+	game->counter.num[2] = new_file_img("./textures/num/2.xpm", game);
+	game->counter.num[3] = new_file_img("./textures/num/3.xpm", game);
+	game->counter.num[4] = new_file_img("./textures/num/4.xpm", game);
+	game->counter.num[5] = new_file_img("./textures/num/5.xpm", game);
+	game->counter.num[6] = new_file_img("./textures/num/6.xpm", game);
+	game->counter.num[7] = new_file_img("./textures/num/7.xpm", game);
+	game->counter.num[8] = new_file_img("./textures/num/8.xpm", game);
+	game->counter.num[9] = new_file_img("./textures/num/9.xpm", game);
+	i = -1;
+	while (++i < 10)
+	{
+		if (!game->counter.num[i].img)
+			return (free_image(game, game->counter.num, 10));
+	}
+	return (1);
 }
