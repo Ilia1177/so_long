@@ -6,7 +6,7 @@
 /*   By: npolack <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:40:18 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/17 06:21:07 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 10:58:10 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	measure_map(t_map *map, char *map_name)
 	char	*path;
 
 	path = ft_strjoin("./maps/", map_name);
-	if (!path)
-		return (0);
 	map->fd = open(path, O_RDONLY);
+	if (!path || map->fd < 0)
+		return (0);
 	free(path);
 	mapline = get_next_line(map->fd);
 	if (!mapline)

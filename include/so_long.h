@@ -6,7 +6,7 @@
 /*   By: npolack <npolack@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 16:13:10 by npolack           #+#    #+#             */
-/*   Updated: 2024/12/10 18:07:16 by npolack          ###   ########.fr       */
+/*   Updated: 2024/12/17 11:31:24 by npolack          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ typedef struct s_item
 
 typedef struct s_movable
 {
-	t_point				acc;
 	t_point				vel;
 	t_point				pos;
-	unsigned int		moves;
 	int					width;
 	int					height;
 	int					frame;
